@@ -1,0 +1,25 @@
+<div class="container pt-5 bg-light">
+  <div class="row bg-light" >
+    <div class="col">
+      <h1 class="page-header ">Patients</h1>
+    </div>
+    <div class="col text-end">
+    <%= link_to new_patient_path do %>
+      <button type="button" class="btn btn-primary">New Patient</button>
+     <% end  %>
+    </div>
+  </div>
+  <div class="table-responsive-sm">
+    <table class="table mt-3 table-light table-striped table-hover">
+      <%= render "patient_header" %>
+      <tbody>
+        <% @patients.each do |patient| %>
+        <tr>
+          <%= render "patient_details", patient: patient %>
+          <%= render "actions", patient: patient %>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
