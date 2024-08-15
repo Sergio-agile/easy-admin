@@ -1,0 +1,19 @@
+<div class="container pt-5">
+  <div class="row mt-3">
+    <h1>New Patient</h1>
+  </div>
+  <%= simple_form_for @patient do |f| %>
+    <%= f.input :first_name %>
+    <%= f.input :last_name %>
+    <%= f.input :birth_date, as: :date, html5: true,
+                start_year: Date.today.year - 90,
+                end_year: Date.today.year - 12,
+                discard_day: true,
+                order: [:month, :year] %>
+    <%= f.input :phone %>
+    <%= f.input :address %>
+    <%= f.button :submit, class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+
