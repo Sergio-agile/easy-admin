@@ -1,7 +1,7 @@
 class PatientsController < ApplicationController
 
   def index
-    @patients = Patient.all.order(created_at: :desc)
+    @patients = Patient.all.order(created_at: :desc).page params[:page]
   end
 
   def new
