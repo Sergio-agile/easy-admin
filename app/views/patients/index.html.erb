@@ -21,8 +21,6 @@
         <% end %>
       </tbody>
     </table>
-    <div class="row custom-pagination">
-      <%= paginate @patients %>
-    </div>
+    <%= table_pagination(@patients) %>
   </div>
 </div>
