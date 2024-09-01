@@ -9,18 +9,9 @@
      <% end  %>
     </div>
   </div>
-  <div class="table-responsive-sm">
-    <table class="table mt-3 table-light table-striped table-hover">
-      <%= render "patient_header" %>
-      <tbody>
-        <% @patients.each do |patient| %>
-        <tr>
-          <%= render "patient_details", patient: patient %>
-          <%= render "actions", patient: patient %>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="table-responsive-sm" data-controller="filter">
+    <%= search_filter('patients') %>
+    <%= render "patients_table", patients: @patients %>
     <%= table_pagination(@patients) %>
   </div>
 </div>
