@@ -1,0 +1,11 @@
+<table id="patients-table" class="table mt-3 table-light table-striped table-hover">
+  <%= render "patient_header" %>
+  <tbody>
+    <% patients.each do |patient| %>
+    <tr>
+      <%= render "patient_details", patient: patient %>
+      <%= render "actions", patient: patient %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
