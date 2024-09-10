@@ -3,7 +3,7 @@
   <tbody>
     <% patients.each do |patient| %>
     <tr>
-      <%= render "patient_details", patient: patient %>
+      <%= render "patient_info", patient: patient %>
       <%= render "actions", patient: patient %>
     </tr>
     <% end %>

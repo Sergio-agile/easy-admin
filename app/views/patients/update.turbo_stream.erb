@@ -1,0 +1,6 @@
+<% if @result %>
+  <%= turbo_stream.replace('edit-patient', partial: 'patient_details', locals: { patient: @patient }) %>
+<% else %>
+  <%= turbo_stream.replace('edit-patient', partial: 'edit_patient', locals: { patient: @patient }) %>
+<% end %>
+
