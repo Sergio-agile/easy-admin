@@ -7,24 +7,7 @@
       </div>
     </div>
     <div class="card-body">
-      <table class="table table-stripped-alternated mb-0">
-        <tr>
-          <td class="fw-semibold">First Name</td>
-          <td><%= @patient.first_name %></td>
-        </tr><tr>
-          <td class="fw-semibold">Last Name</td>
-          <td><%= @patient.last_name %></td>
-        </tr><tr>
-          <td class="fw-semibold">Phone</td>
-          <td><%= @patient.phone %></td>
-        </tr><tr>
-          <td class="fw-semibold">Birthdate</td>
-          <td><%= @patient.birth_date %></td>
-        </tr><tr>
-          <td class="fw-semibold">Address</td>
-          <td><%= @patient.address %></td>
-        </tr>
-      </table>
+      <%= render 'patient_details', patient: @patient %>
     </div>
   </div>
 </div>

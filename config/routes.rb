@@ -8,5 +8,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "patients#index"
 
-  resources :patients
+  resources :patients do
+    get :cancel_edit, on: :member
+  end
 end
