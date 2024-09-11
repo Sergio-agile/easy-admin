@@ -1,0 +1,14 @@
+<div class="container pt-5 mb-5">
+  <div class="row">
+    <h1>Edit Consultation</h1>
+    <h2>for <%= @consultation.patient.first_name %> <%= @consultation.patient.last_name %></h2>
+    <h4> Date: <%= @consultation.date %></h4>
+  </div>
+  <%= simple_form_for [@consultation.patient, @consultation] do |f| %>
+    <%= f.input :notes_before, as: :rich_text_area, input_html: { style: 'height: 60vh' }  %>
+    <%= f.input :notes_after, as: :rich_text_area, input_html: { style: 'height: 60vh' } %>
+    <%= f.input :notes_to_send, as: :rich_text_area, input_html: { style: 'height: 60vh' } %>
+    <%= f.submit "Save", class: "btn btn-primary" %>
+    <%= link_to 'Cancel', patient_path(@consultation.patient), class: 'btn btn-secondary' %>
+  <% end %>
+</div>

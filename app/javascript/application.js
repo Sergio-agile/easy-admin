@@ -5,3 +5,6 @@ import * as bootstrap from "bootstrap"
 import "popper"
 import "@fortawesome/fontawesome-free"
 import "@rails/request.js"
+
+import "trix"
+import "@rails/actiontext"
