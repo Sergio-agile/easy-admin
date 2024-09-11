@@ -10,5 +10,6 @@ Rails.application.routes.draw do
 
   resources :patients do
     get :cancel_edit, on: :member
+    resources :consultations
   end
 end

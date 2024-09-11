@@ -10,5 +10,16 @@
       <%= render 'patient_details', patient: @patient %>
     </div>
   </div>
+  <div class="card mt-3">
+    <div class="card-header d-flex justify-content-between">
+      <h5 class="mt-1">Patient consultations</h5>
+      <div class="me-3">
+        <%= link_to "New", new_patient_consultation_path(@patient), class: 'btn btn-primary px-4 text-white'%>
+      </div>
+    </div>
+    <div class="card-body">
+      <%= render 'consultations/consultations_table', patient: @patient %>
+    </div>
+  </div>
 </div>
 

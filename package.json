@@ -9,5 +9,9 @@
   },
   "browserslist": [
     "defaults"
-  ]
+  ],
+  "dependencies": {
+    "@rails/actiontext": "^7.2.100",
+    "trix": "^2.1.5"
+  }
 }
