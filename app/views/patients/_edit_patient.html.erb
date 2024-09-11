@@ -12,6 +12,7 @@
                 order: [:month, :year] %>
     <%= f.input :phone %>
     <%= f.input :address %>
-    <%= f.button :submit, 'Save', class: "btn btn-success mt-3" %>
+    <%= f.button :submit, 'Save', class: "btn btn-primary mt-3 text-white" %>
+    <%= link_to 'Cancel', cancel_edit_patient_path(@patient), class: 'btn btn-secondary mt-3', data: { turbo_stream: true } %>
   <% end %>
 </div>

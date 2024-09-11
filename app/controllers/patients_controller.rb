@@ -37,10 +37,16 @@ class PatientsController < ApplicationController
   end
 
   def update
-    @patient = Patient.find_by(id: params[:id])
+    @patient = Patient.find(params[:id])
     @patient.assign_attributes(patient_params)
 
     @result = @patient.save
+
+    respond_to(&:turbo_stream)
+  end
+
+  def cancel_edit
+    @patient = Patient.find(params[:id])
 
     respond_to(&:turbo_stream)
   end
