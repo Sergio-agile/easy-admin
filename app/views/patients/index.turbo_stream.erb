@@ -1,1 +1,2 @@
 <%= turbo_stream.replace('patients-table', partial: 'patients_table', locals: { patients: @patients }) %>
+<%= turbo_stream.replace('table-pagination', partial: 'pagination', locals: { pagy: @pagy }) %>

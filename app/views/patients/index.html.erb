@@ -12,6 +12,7 @@
   <div class="table-responsive-sm" data-controller="filter">
     <%= search_filter('patients') %>
     <%= render "patients_table", patients: @patients %>
-    <%= table_pagination(@patients) %>
   </div>
+  <%= render "pagination", pagy: @pagy %>
+
 </div>
