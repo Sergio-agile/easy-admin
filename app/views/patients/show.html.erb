@@ -1,3 +1,9 @@
+<%= content_for :breadcrumbs do %>
+  <%= breadcrumb_list do %>
+    <%= breadcrumb_item 'Patients', patients_path %>
+    <%= breadcrumb_item 'Patient' %>
+  <% end %>
+<% end %>
 <div class="container mt-5">
   <div class="card">
     <div class="card-header d-flex justify-content-between">
