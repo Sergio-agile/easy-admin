@@ -11,9 +11,20 @@
   </head>
 
   <body>
-
-    <%= yield :breadcrumbs %>
-
-    <%= yield %>
+     <div class="d-flex justify-content-start">
+       <div id="side-menu" class="p-4">
+         <ul class="list-group list-group-flush">
+           <%= sidemenu_link('Home', root_path, :home) %>
+           <%= sidemenu_link('Patients', patients_path, :patients) %>
+           <%= sidemenu_link('Consultations', consultations_path, :consultations) %>
+         </ul>
+       </div>
+       <div id="content" class="container">
+         <div class="breadcrumbs mt-3 ps-3">
+            <%= yield :breadcrumbs %>
+         </div>
+         <%= yield %>
+       </div>
+    </div>
   </body>
 </html>

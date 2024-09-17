@@ -4,8 +4,9 @@
   <% end %>
 <% end %>
 
-<div class="container pt-5 bg-light">
-  <div class="row bg-light" >
+
+<div class="container pt-5">
+  <div class="row" >
     <div class="col">
       <h1 class="page-header ">Patients</h1>
     </div>
@@ -15,10 +16,11 @@
      <% end  %>
     </div>
   </div>
-  <div class="table-responsive-sm" data-controller="filter">
+  <div data-controller="filter">
     <%= search_filter 'patients' %>
     <%= render "patients_table", patients: @patients %>
   </div>
   <%= render "pagination", pagy: @pagy %>
 
 </div>
+
