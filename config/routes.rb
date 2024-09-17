@@ -15,4 +15,6 @@ Rails.application.routes.draw do
     get :cancel_edit, on: :member
     resources :consultations
   end
+
+  resources :consultations
 end

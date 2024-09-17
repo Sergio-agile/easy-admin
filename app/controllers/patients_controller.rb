@@ -1,5 +1,7 @@
 class PatientsController < ApplicationController
 
+  before_action { sidemenu_active(:patients) }
+
   def index
     patients
 

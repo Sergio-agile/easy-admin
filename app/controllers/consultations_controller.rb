@@ -1,5 +1,16 @@
 class ConsultationsController < ApplicationController
 
+  before_action { sidemenu_active(:consultations) }
+
+  def index
+    consultations
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
+  end
+
   def new
     @patient = Patient.find(params[:patient_id])
     @consultation = Consultation.new
@@ -35,6 +46,19 @@ class ConsultationsController < ApplicationController
 
   def consultation_params
     params.require(:consultation).permit(:notes_after, :notes_before, :notes_to_send)
+  end
+
+  def consultations
+    @pagy, @consultations = pagy(filtered_consultations.order(created_at: :desc))
+  end
+
+  def filtered_consultations
+    if params['term'].present?
+      term = "%#{params['term']}%"
+      Consultation.joins(:patient).where("patients.first_name ILIKE ? OR patients.last_name ILIKE ?", term, term)
+    else
+      Consultation.all
+    end
   end
 
 
