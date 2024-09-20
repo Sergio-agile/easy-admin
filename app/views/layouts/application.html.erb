@@ -12,7 +12,7 @@
 
   <body>
      <div class="d-flex justify-content-start">
-       <div id="side-menu" class="py-4">
+       <div id="side-menu">
          <ul class="list-group list-group-flush">
            <%= sidemenu_link('Home', root_path, :home) %>
            <%= sidemenu_link('Patients', patients_path, :patients) %>
@@ -23,7 +23,7 @@
          <div class="breadcrumbs mt-3 ps-3">
             <%= yield :breadcrumbs %>
          </div>
-         <%= yield %>
+         <%= yield :contents %>
        </div>
     </div>
   </body>
