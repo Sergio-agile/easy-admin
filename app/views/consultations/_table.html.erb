@@ -7,10 +7,6 @@
     </tr>
   </thead>
   <tbody>
-    <% if @consultations.blank? %>
-      <p>No consultations yet. Go ahead and add the first one for this patient</p>
-    <% else %>
-      <%= render collection: @consultations, partial: 'consultation' %>
-    <% end %>
+    <%= render @consultations %>
   </tbody>
 </table>

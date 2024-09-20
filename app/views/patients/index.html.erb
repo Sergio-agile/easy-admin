@@ -1,26 +1,44 @@
+<%# all templates should be:
+
+- content_for :title do
+  = fe_title :detentions
+
+- content_for :breadcrumbs do (DONE)
+
+
+- content_for :actions do (THIS SHOULD INCLUDE FILTERS AND ACTIONS AFTER REFACTORING THEM)
+  = fe_filter :detention_list_cover, as: :select, collection: detentions_collection
+  = fe_filter :detention_type_ids, as: :select, collection: detention_template_collection, include_blank: true, multiple: true
+
+  = fe_action :create, new_detentions_detention_path, [:my_detentions, :can_create], classes: 'ms-auto', title: t('actions.set_detention')
+
+  - content_for :contents do
+    end %>
+
+
 <%= content_for :breadcrumbs do %>
   <%= breadcrumb_list do %>
     <%= breadcrumb_item 'Patients' %>
   <% end %>
 <% end %>
 
-
-<div class="container pt-5">
-  <div class="row" >
-    <div class="col">
-      <h1 class="page-header ">Patients</h1>
+<%= content_for :contents do %>
+  <div class="container pt-5">
+    <div class="row" >
+      <div class="col"> <!-- put this in contents for title -->
+        <h1 class="page-header ">Patients</h1>
+      </div>
+      <div class="col text-end"> <!-- put this in contents for actions -->
+        <%= link_to 'New Patient', new_patient_path, class: "btn btn-primary" %>
+      </div>
     </div>
-    <div class="col text-end">
-    <%= link_to new_patient_path do %>
-      <button type="button" class="btn btn-primary">New Patient</button>
-     <% end  %>
+    <div data-controller="filter">
+      <%= search_filter 'patients' %> <!-- put this in contents for actions / filters -->
+      <%= render "table" %>
     </div>
-  </div>
-  <div data-controller="filter">
-    <%= search_filter 'patients' %>
-    <%= render "patients_table", patients: @patients %>
-  </div>
-  <%= render "pagination", pagy: @pagy %>
+    <%= render "pagination", pagy: @pagy %>
 
-</div>
+  </div>
+<% end %>
+
 

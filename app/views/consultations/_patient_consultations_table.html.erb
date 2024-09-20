@@ -1,0 +1,13 @@
+<div id="consultations-list" class="container">
+  <table id="consultations-table" class="table mt-3 table-light table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "consultations/consultation_info", collection: @patient.consultations, as: :consultation %>
+    </tbody>
+  </table>
+</div>

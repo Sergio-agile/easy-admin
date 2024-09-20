@@ -4,19 +4,21 @@
   <% end %>
 <% end %>
 
-<div class="container pt-5">
-  <div class="row" >
-    <div class="col">
-      <h1 class="page-header ">Consultations</h1>
+<%= content_for :contents do %>
+  <div class="container pt-5">
+    <div class="row" >
+      <div class="col">
+        <h1 class="page-header ">Consultations</h1>
+      </div>
+      <div class="col text-end">
+      <%= link_to 'New consultation', '', class: 'btn btn-success' %>
+      </div>
     </div>
-    <div class="col text-end">
-    <%= link_to 'New consultation', '', class: 'btn btn-primary' %>
+    <div data-controller="filter">
+      <%= search_filter 'consultations' %>
+      <%# <% render @consultations  %>
+      <%= render partial: "table" %>
+      <%= render "pagination", pagy: @pagy %>
     </div>
   </div>
-  <div data-controller="filter">
-    <%= search_filter 'consultations' %>
-    <%# <% render @consultations  %>
-    <%= render partial: "table" %>
-    <%= render "pagination", pagy: @pagy %>
-  </div>
-</div>
+<% end %>
