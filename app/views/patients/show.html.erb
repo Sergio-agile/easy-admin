@@ -11,7 +11,7 @@
       <div class="card-header d-flex justify-content-between">
         <h5 class="mt-1">Patient details</h5>
         <div class="me-3">
-          <%= link_to "Edit", edit_patient_path(@patient), class: 'btn btn-primary px-4 text-white', data: { turbo_stream: true } %>
+          <%= link_to "Edit", edit_patient_path(@patient), class: 'btn btn-primary text-white px-4 rounded-pill', data: { turbo_stream: true } %>
         </div>
       </div>
       <div class="card-body">
@@ -22,7 +22,7 @@
       <div class="card-header d-flex justify-content-between">
         <h5 class="mt-1">Patient consultations</h5>
         <div class="me-3">
-          <%= link_to "New", new_patient_consultation_path(@patient), class: 'btn btn-primary px-4 text-white'%>
+          <%= link_to "New", new_patient_consultation_path(@patient), class: 'btn btn-primary px-4 rounded-pill text-white'%>
         </div>
       </div>
       <div class="card-body">

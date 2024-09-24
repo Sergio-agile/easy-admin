@@ -17,8 +17,8 @@
       <%= f.input :notes_before, as: :rich_text_area, input_html: { style: 'height: 60vh' }  %>
       <%= f.input :notes_after, as: :rich_text_area, input_html: { style: 'height: 60vh' } %>
       <%= f.input :notes_to_send, as: :rich_text_area, input_html: { style: 'height: 60vh' } %>
-      <%= f.submit "Save", class: "btn btn-primary" %>
-      <%= link_to 'Cancel', patient_path(@consultation.patient), class: 'btn btn-secondary' %>
+      <%= f.submit "Save", class: "btn btn-success px-4 rounded-pill" %>
+      <%= link_to 'Cancel', patient_path(@consultation.patient), class: 'btn btn-secondary px-4 rounded-pill' %>
     <% end %>
   </div>
 <% end %>
