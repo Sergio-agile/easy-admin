@@ -1,5 +1,7 @@
 class ConsultationsController < ApplicationController
 
+  include ::PdfRendererConcern
+
   before_action { sidemenu_active(:consultations) }
 
   def index
@@ -28,7 +30,12 @@ class ConsultationsController < ApplicationController
   end
 
   def edit
-    @consultation = Consultation.find(params[:id])
+    @consultation = Consultation.includes(
+      :patient,
+      :rich_text_notes_before,
+      :rich_text_notes_after,
+      :rich_text_notes_to_send
+    ).find(params[:id])
   end
 
   def update
@@ -39,6 +46,17 @@ class ConsultationsController < ApplicationController
       redirect_to patient_path(@consultation.patient)
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def download
+    @consultation = Consultation.find(params[:id])
+    notes_to_send = render_to_string(template: "consultations/download", layout: "pdf", formats: [:html])
+
+    respond_to do |format|
+      format.html { render html: notes_to_send }
+      format.pdf { render_pdf notes_to_send, filename: "report.pdf", layout: 'pdf' }
+      # format.pdf { render_pdf notes_to_send, filename: t(".filename", id: @consultation.id) }
     end
   end
 

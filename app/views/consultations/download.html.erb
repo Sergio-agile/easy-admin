@@ -1,0 +1,28 @@
+<div class="row">
+  <%= link_to edit_patient_consultation_path(@consultation.patient, @consultation), class: 'text-end' do %>
+    <i class="fa-solid fa-xmark fs-1"></i>
+  <% end %>
+</div>
+<div class="row bg-primary">
+  <h1 class="text-center text-white">Informe de la consulta</h1>
+  <p class="text-center text-white">Ariadne Spiegel Schmidt</p>
+  <div class="img-container">
+    <%= image_tag wicked_pdf_asset_base64('logo-infinito.png'), size: "200x150" %>
+  </div>
+</div>
+
+<div class="row text-center">
+  <p>Fecha de la consulta: <%= @consultation.date.strftime('%d-%m-%Y') %></p>
+  <p>Paciente: <%= @consultation.patient.first_name %> <%= @consultation.patient.last_name %></p>
+</div>
+
+<div class="row m-5">
+  <%= @consultation.notes_to_send %>
+</div>
+
+<% if request.format.html? %>
+  <div class="text-center">
+    <a href="<%= download_consultation_path(@consultation, format: :pdf) %>" class="btn btn-primary mt-3" target="_blank">Download PDF</a>
+  </div>
+<% end %>
+

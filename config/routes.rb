@@ -16,5 +16,7 @@ Rails.application.routes.draw do
     resources :consultations
   end
 
-  resources :consultations
+  resources :consultations do
+    get :download, on: :member
+  end
 end

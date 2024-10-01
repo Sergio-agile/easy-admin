@@ -1,0 +1,74 @@
+@page {
+  margin: 0;
+  size: A4;
+}
+
+body {
+  margin: 10px;
+  background-color: white !important;
+}
+
+/* pdf_styles.css */
+
+/* Styles for the report title */
+.bg-primary {
+  background-color: #6797DC;
+  padding: 20px;
+  text-align: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+/* Patient Name */
+.text-success-emphasis {
+  color: #28a745;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Row styling */
+.row {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.row p {
+  margin: 5px 0;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #6797DC;
+  border-radius: 5px;
+}
+
+.btn-primary {
+  background-color: #6797DC;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.img-container {
+  max-width: !important 70px;
+}
+
+/* Image styling */
+img {
+  display: block;
+  margin: 0 auto;
+  padding-top: 0;
+  max-width: 300px;
+}
+
