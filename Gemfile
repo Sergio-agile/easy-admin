@@ -62,6 +62,8 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem 'annotate'
   gem 'pry-rails'
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -81,4 +83,5 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem 'shoulda-matchers'
 end
