@@ -1,0 +1,24 @@
+<%= content_for :breadcrumbs do %>
+  <%= breadcrumb_list do %>
+    <%= breadcrumb_item 'Config' %>
+  <% end %>
+<% end %>
+
+<%= content_for :contents do %>
+  <div class='container w-50 h-100 mt-5'>
+    <h1>Update password</h1>
+    <div class='w-50'>
+      <%= simple_form_for current_user, url: password_path do |f| %>
+        <% if f.object.errors.any? %>
+          <% f.object.errors.full_messages.each do |message| %>
+            <div><%= message %></div>
+          <% end %>
+        <% end %>
+        <%= f.input :password_challenge, label: 'Current password' %>
+        <%= f.input :password, label: 'New password' %>
+        <%= f.input :password_confirmation %>
+        <%= f.submit 'Update password', class: 'btn btn-success px-4 rounded-pill w-100 mt-3' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

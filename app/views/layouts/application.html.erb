@@ -11,20 +11,41 @@
   </head>
 
   <body>
-     <div class="d-flex justify-content-start">
-       <div id="side-menu">
-         <ul class="list-group list-group-flush">
-           <%= sidemenu_link('Home', root_path, :home) %>
-           <%= sidemenu_link('Patients', patients_path, :patients) %>
-           <%= sidemenu_link('Consultations', consultations_path, :consultations) %>
-         </ul>
-       </div>
-       <div id="content" class="container">
-         <div class="breadcrumbs mt-3 ps-3">
-            <%= yield :breadcrumbs %>
-         </div>
+    <div><%= notice %></div>
+    <div><%= alert %></div>
+    <nav class="navbar">
+      <div class="container-fluid justify-content-between">
+        <%= link_to home_path do %>
+          <%= image_tag wicked_pdf_asset_base64('logo-infinito.png'), size: "70x50" %>
+        <% end %>
+        <% if current_user_signed_in? %>
+          <%= button_to 'Log Out', session_path, method: :delete, class: 'btn btn-light px-4 rounded-pill' %>
+        <% else %>
+          <%# <%= link_to 'Sign Up', new_registration_path, class: 'btn btn-primary' %>
+          <%= link_to 'Log In', new_session_path, class: 'btn btn-success px-4 rounded-pill' %>
+        <% end %>
+      </div>
+    </nav>
+
+    <div class="d-flex justify-content-start">
+      <% if current_user_signed_in? %>
+        <div id="side-menu" class="vh-100">
+          <ul class="list-group list-group-flush">
+            <%= sidemenu_link('Home', home_path, :home) %>
+            <%= sidemenu_link('Patients', patients_path, :patients) %>
+            <%= sidemenu_link('Consultations', consultations_path, :consultations) %>
+            <% if current_user_signed_in? %>
+              <%= sidemenu_link('Config', edit_password_path, :config) %>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div id="content" class="container">
+        <div class="breadcrumbs mt-3 ps-3">
+          <%= yield :breadcrumbs %>
+        </div>
          <%= yield :contents %>
-       </div>
+      </div>
     </div>
   </body>
 </html>

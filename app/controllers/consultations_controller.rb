@@ -2,6 +2,7 @@ class ConsultationsController < ApplicationController
 
   include ::PdfRendererConcern
 
+  before_action :authenticate_user!
   before_action { sidemenu_active(:consultations) }
 
   def index

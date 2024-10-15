@@ -7,7 +7,14 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "patients#index"
-  root to: "home#index"
+  # root to: "main#index"
+  root to: 'sessions#new'
+  get 'home', to: 'home#index'
+
+  resources :registrations
+  resource :session
+  resource :password_reset
+  resource :password
 
 
 
