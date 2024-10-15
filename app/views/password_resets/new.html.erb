@@ -1,0 +1,14 @@
+<%= content_for :contents do %>
+  <div class='container w-50 h-100 mt-5'>
+    <h1>Reset your password</h1>
+    <%= simple_form_for @user, url: password_reset_path do |f| %>
+      <% if f.object.errors.any? %>
+        <% f.object.errors.full_messages.each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      <% end %>
+      <%= f.input :email %>
+      <%= f.submit 'Reset password', class: 'btn btn-success px-4 rounded-pill w-100 mt-3' %>
+    <% end %>
+  </div>
+<% end %>

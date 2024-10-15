@@ -2,7 +2,7 @@ module BreadcrumbsHelper
 
   def breadcrumb_list(&)
     content_tag 'ol', class: 'breadcrumb' do
-      home_breadcrumb = breadcrumb_item 'home', root_path
+      home_breadcrumb = breadcrumb_item 'home', home_path
       home_breadcrumb.to_s + capture(&)
     end
   end
