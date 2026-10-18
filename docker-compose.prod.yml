@@ -1,0 +1,44 @@
+# Server deployment:
+#   docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: easy_admin
+      POSTGRES_PASSWORD: ${EASY_ADMIN_DATABASE_PASSWORD:?missing}
+      POSTGRES_DB: easy_admin_production
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U easy_admin -d easy_admin_production"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+
+  web:
+    build: .
+    restart: unless-stopped
+    environment:
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:?missing}
+      EASY_ADMIN_DATABASE_PASSWORD: ${EASY_ADMIN_DATABASE_PASSWORD}
+      DATABASE_HOST: db
+      REDIS_URL: redis://redis:6379/1
+      RAILS_FORCE_SSL: ${RAILS_FORCE_SSL:-true}
+      RAILS_ASSUME_SSL: ${RAILS_ASSUME_SSL:-true}
+    volumes:
+      - storage:/rails/storage
+    ports:
+      - "${APP_BIND:-127.0.0.1}:${APP_PORT:-3000}:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+volumes:
+  pgdata:
+  storage:

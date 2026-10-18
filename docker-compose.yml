@@ -1,0 +1,48 @@
+# Local development: docker compose up
+# Use APP_PORT=3001 docker compose up if port 3000 is already taken
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pg16data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+      REDIS_URL: redis://redis:6379/1
+      RACK_PROFILER: ${RACK_PROFILER:-}
+    volumes:
+      - .:/rails
+      - bundle:/usr/local/bundle
+      - node_modules:/rails/node_modules
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    stdin_open: true
+    tty: true
+
+volumes:
+  pg16data:
+  bundle:
+  node_modules:
