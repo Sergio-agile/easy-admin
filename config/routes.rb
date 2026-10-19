@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   root to: 'sessions#new'
   get 'home', to: 'home#index'
 
-  resources :registrations
   resource :session
   resource :password_reset
   resource :password
