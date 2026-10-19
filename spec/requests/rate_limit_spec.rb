@@ -22,7 +22,7 @@ RSpec.describe "Rate limiting", type: :request do
 
     it "blocks an email after 5 failed attempts, even from different IPs" do
       5.times { |i| attempt_login(email: user.email, ip: "10.0.0.#{i}") }
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
 
       attempt_login(email: user.email, password: "secret-password", ip: "10.0.0.99")
 
@@ -40,7 +40,7 @@ RSpec.describe "Rate limiting", type: :request do
 
     it "blocks an IP after 10 attempts with different emails" do
       10.times { |i| attempt_login(email: "nobody#{i}@example.com") }
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
 
       attempt_login(email: "another@example.com")
 

@@ -25,7 +25,7 @@ class PatientsController < ApplicationController
     if @patient.save
       redirect_to patient_path(@patient)
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 

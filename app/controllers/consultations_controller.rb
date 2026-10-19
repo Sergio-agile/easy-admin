@@ -26,7 +26,7 @@ class ConsultationsController < ApplicationController
     if @consultation.save
       redirect_to patient_path(@patient)
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -46,7 +46,7 @@ class ConsultationsController < ApplicationController
     if @consultation.save
       redirect_to patient_path(@consultation.patient)
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
