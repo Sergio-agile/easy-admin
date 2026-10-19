@@ -21,7 +21,6 @@
         <% if current_user_signed_in? %>
           <%= button_to 'Log Out', session_path, method: :delete, class: 'btn btn-light px-4 rounded-pill' %>
         <% else %>
-          <%# <%= link_to 'Sign Up', new_registration_path, class: 'btn btn-primary' %>
           <%= link_to 'Log In', new_session_path, class: 'btn btn-success px-4 rounded-pill' %>
         <% end %>
       </div>
