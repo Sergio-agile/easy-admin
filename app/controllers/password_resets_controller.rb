@@ -24,7 +24,7 @@ class PasswordResetsController < ApplicationController
     if @user.update(password_params)
       redirect_to home_path, notice: 'Your password have been reset succesfully'
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
