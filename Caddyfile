@@ -1,0 +1,7 @@
+# Reverse proxy for production (docker-compose.prod.yml).
+# Caddy gets and renews the Let's Encrypt certificate for APP_DOMAIN and
+# redirects HTTP to HTTPS on its own.
+{$APP_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy web:3000
+}
