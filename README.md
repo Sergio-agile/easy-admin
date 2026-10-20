@@ -1,24 +1,27 @@
-# README
+# easy-admin
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[![CI](https://github.com/Sergio-agile/easy-admin/actions/workflows/ci.yml/badge.svg)](https://github.com/Sergio-agile/easy-admin/actions/workflows/ci.yml)
 
-Things you may want to cover:
+Patient and consultation manager for an osteopathy practice: patient records, consultation notes with rich text, and PDF reports to send to patients.
 
-* Ruby version
+**Stack:** Ruby on Rails 7.1, PostgreSQL, Hotwire (Turbo + Stimulus), Action Text, Bootstrap, wicked_pdf. Deployed with Docker Compose.
 
-* System dependencies
+## Running locally
 
-* Configuration
+```sh
+APP_PORT=3001 docker compose up
+docker compose exec web bin/rails users:create EMAIL=you@example.com   # prints a random password
+```
 
-* Database creation
+The app is then available at http://localhost:3001.
 
-* Database initialization
+## Quality checks
 
-* How to run the test suite
+```sh
+docker compose exec -T -e RAILS_ENV=test web bundle exec rspec
+docker compose exec -T web bundle exec rubocop
+docker compose exec -T web bundle exec brakeman --no-pager
+docker compose exec -T web bundle exec bundler-audit check --update
+```
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+All of them run in GitHub Actions on every pull request.

@@ -47,24 +47,36 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
-gem 'sassc-rails'
-gem 'bootstrap'
-gem 'faker'
-gem 'simple_form'
-gem 'kaminari'
-gem 'requestjs-rails'
-gem 'pagy'
-gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
-gem 'rack-attack'
+gem "sassc-rails"
+gem "bootstrap"
+gem "faker"
+gem "simple_form"
+gem "kaminari"
+gem "requestjs-rails"
+gem "pagy"
+gem "wicked_pdf"
+gem "wkhtmltopdf-binary"
+gem "rack-attack"
+
+# json 3 breaks ActiveSupport 7.1 JSON encoding (session cookies); drop after the Rails upgrade
+gem "json", "< 3"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
-  gem 'annotate'
-  gem 'pry-rails'
-  gem 'rspec-rails'
-  gem 'factory_bot_rails'
+  gem "annotate"
+  gem "pry-rails"
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+
+  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
+  gem "brakeman", require: false
+
+  # Audits gems for known vulnerabilities [https://github.com/rubysec/bundler-audit]
+  gem "bundler-audit", require: false
+
+  # Omakase Ruby styling for Rails [https://github.com/rails/rubocop-rails-omakase/]
+  gem "rubocop-rails-omakase", require: false
 end
 
 group :development do
@@ -72,9 +84,9 @@ group :development do
   gem "web-console"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-  gem 'memory_profiler'
-  gem 'rack-mini-profiler', require: false
-  gem 'stackprof'
+  gem "memory_profiler"
+  gem "rack-mini-profiler", require: false
+  gem "stackprof"
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
@@ -84,5 +96,5 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem 'shoulda-matchers'
+  gem "shoulda-matchers"
 end

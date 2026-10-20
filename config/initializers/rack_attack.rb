@@ -48,7 +48,7 @@ class Rack::Attack
       </html>
     HTML
 
-    [429, { "content-type" => "text/html", "retry-after" => retry_after.to_s }, [body]]
+    [ 429, { "content-type" => "text/html", "retry-after" => retry_after.to_s }, [ body ] ]
   end
 end
 

@@ -61,12 +61,11 @@ class PatientsController < ApplicationController
   end
 
   def filtered_patients
-    if params['term'].present?
+    if params["term"].present?
       term = "%#{params['term']}%"
       Patient.where("first_name ILIKE ? OR last_name ILIKE ?", term, term)
     else
       Patient.all
     end
   end
-
 end

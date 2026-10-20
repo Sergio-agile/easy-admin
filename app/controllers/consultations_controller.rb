@@ -1,5 +1,4 @@
 class ConsultationsController < ApplicationController
-
   include ::PdfRendererConcern
 
   before_action :authenticate_user!
@@ -52,11 +51,11 @@ class ConsultationsController < ApplicationController
 
   def download
     @consultation = Consultation.find(params[:id])
-    notes_to_send = render_to_string(template: "consultations/download", layout: "pdf", formats: [:html])
+    notes_to_send = render_to_string(template: "consultations/download", layout: "pdf", formats: [ :html ])
 
     respond_to do |format|
       format.html { render html: notes_to_send }
-      format.pdf { render_pdf notes_to_send, filename: "report.pdf", layout: 'pdf' }
+      format.pdf { render_pdf notes_to_send, filename: "report.pdf", layout: "pdf" }
       # format.pdf { render_pdf notes_to_send, filename: t(".filename", id: @consultation.id) }
     end
   end
@@ -72,13 +71,11 @@ class ConsultationsController < ApplicationController
   end
 
   def filtered_consultations
-    if params['term'].present?
+    if params["term"].present?
       term = "%#{params['term']}%"
       Consultation.joins(:patient).where("patients.first_name ILIKE ? OR patients.last_name ILIKE ?", term, term)
     else
       Consultation.all
     end
   end
-
-
 end
