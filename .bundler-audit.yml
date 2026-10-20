@@ -1,0 +1,21 @@
+---
+# Known advisories that need Rails >= 7.2.3.1 or Puma >= 7.2.1. They are
+# fixed by the Ruby/Rails upgrade; remove each entry once its gem is updated.
+# Any advisory not listed here fails CI.
+ignore:
+  # actionview 7.1.6
+  - GHSA-v55j-83pf-r9cq
+  # activestorage 7.1.6
+  - GHSA-qcfx-2mfw-w4cg
+  - GHSA-r46p-8f7g-vvvg
+  - GHSA-9xrj-h377-fr87
+  - GHSA-73f9-jhhh-hr5m
+  - GHSA-p9fm-f462-ggrg
+  - GHSA-xr9x-r78c-5hrm
+  # activesupport 7.1.6
+  - GHSA-cg4j-q9v8-6v38
+  - GHSA-89vf-4333-qx8v
+  - GHSA-2j26-frm8-cmj9
+  # puma 6.6.1
+  - GHSA-qpgp-93vx-g8v8
+  - GHSA-2vqw-3mp8-cgmx

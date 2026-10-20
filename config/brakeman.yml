@@ -1,0 +1,6 @@
+---
+# Ruby 3.2 and Rails 7.1 are end-of-life. Re-enable these checks once the
+# Ruby/Rails upgrade lands.
+:skip_checks:
+  - CheckEOLRails
+  - CheckEOLRuby
