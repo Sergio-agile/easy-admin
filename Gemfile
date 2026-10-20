@@ -58,6 +58,9 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'rack-attack'
 
+# json 3 breaks ActiveSupport 7.1 JSON encoding (session cookies); drop after the Rails upgrade
+gem "json", "< 3"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
@@ -65,6 +68,15 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
+
+  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
+  gem "brakeman", require: false
+
+  # Audits gems for known vulnerabilities [https://github.com/rubysec/bundler-audit]
+  gem "bundler-audit", require: false
+
+  # Omakase Ruby styling for Rails [https://github.com/rails/rubocop-rails-omakase/]
+  gem "rubocop-rails-omakase", require: false
 end
 
 group :development do
