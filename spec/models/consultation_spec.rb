@@ -22,7 +22,6 @@
 require 'rails_helper'
 
 RSpec.describe Consultation, type: :model do
-
   let(:consultation) { build(:consultation) }
 
   describe 'associations' do

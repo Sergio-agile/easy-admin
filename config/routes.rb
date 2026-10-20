@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "patients#index"
   # root to: "main#index"
-  root to: 'sessions#new'
-  get 'home', to: 'home#index'
+  root to: "sessions#new"
+  get "home", to: "home#index"
 
   resource :session
   resource :password_reset

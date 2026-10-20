@@ -6,16 +6,16 @@ class SessionsController < ApplicationController
   def create
     if user = User.authenticate_by(email: params[:user][:email], password: params[:user][:password])
       login user
-      redirect_to home_path, notice: 'You have signed succesfully'
+      redirect_to home_path, notice: "You have signed succesfully"
     else
       @user = User.new
-      flash[:alert] = 'Invalid email / password'
+      flash[:alert] = "Invalid email / password"
       render :new, status: :unprocessable_content
     end
   end
 
   def destroy
     logout(current_user)
-    redirect_to root_path, notice: 'You have been logged out'
+    redirect_to root_path, notice: "You have been logged out"
   end
 end

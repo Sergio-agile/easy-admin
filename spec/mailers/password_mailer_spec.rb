@@ -7,7 +7,7 @@ RSpec.describe PasswordMailer, type: :mailer do
     let(:mail) { described_class.with(user: user, token: token).password_reset }
 
     it "is sent to the user" do
-      expect(mail.to).to eq(["user@example.com"])
+      expect(mail.to).to eq([ "user@example.com" ])
     end
 
     it "contains the reset link with the token" do
