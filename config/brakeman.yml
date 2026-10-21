@@ -1,4 +1,4 @@
 ---
-# Rails 7.1 is end-of-life. Re-enable this check once the Rails upgrade lands.
+# Rails 7.2 is end-of-life (2026-08-09). Re-enable this check with Rails 8.0.
 :skip_checks:
   - CheckEOLRails

@@ -38,6 +38,5 @@ CI (`.github/workflows/ci.yml`) runs all four on every PR and on `main`.
 
 ## Known exceptions (remove with the Ruby/Rails upgrade)
 
-- `config/brakeman.yml` skips the end-of-life Rails check.
-- `.bundler-audit.yml` ignores advisories fixed only by Rails >= 7.2.3.1 / Puma >= 7.2.1.
-- `json` is pinned below 3 in the Gemfile (json 3 breaks ActiveSupport 7.1).
+- `config/brakeman.yml` skips the end-of-life Rails check (Rails 7.2).
+- `.bundler-audit.yml` ignores advisories fixed only by Puma >= 7.2.1.
