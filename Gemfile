@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby "3.4.11"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1.3", ">= 7.1.3.4"
+gem "rails", "~> 7.2.4"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -57,9 +57,6 @@ gem "pagy"
 gem "wicked_pdf"
 gem "wkhtmltopdf-binary"
 gem "rack-attack"
-
-# json 3 breaks ActiveSupport 7.1 JSON encoding (session cookies); drop after the Rails upgrade
-gem "json", "< 3"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
