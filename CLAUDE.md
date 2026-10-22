@@ -1,6 +1,6 @@
 # easy-admin
 
-Patient and consultation manager for a single osteopathy practice. Rails 7.1, PostgreSQL, Hotwire, Bootstrap, wicked_pdf.
+Patient and consultation manager for a single osteopathy practice. Rails 8.0, PostgreSQL, Hotwire, Bootstrap, wicked_pdf.
 
 ## Development
 
@@ -38,5 +38,6 @@ CI (`.github/workflows/ci.yml`) runs all four on every PR and on `main`.
 
 ## Known exceptions (remove with the Ruby/Rails upgrade)
 
-- `config/brakeman.yml` skips the end-of-life Rails check (Rails 7.2).
+- `config/brakeman.yml` skips the end-of-life Rails check (Rails 8.0 support ends 2026-11-07).
+- `Gemfile` pins json to 2.x: ActiveSupport 8.0 is incompatible with json 3.
 - `.bundler-audit.yml` ignores advisories fixed only by Puma >= 7.2.1.
