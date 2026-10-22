@@ -107,5 +107,10 @@ RSpec.describe "Consultations", type: :request do
       expect(response.headers["Content-Disposition"]).to include("attachment", "report.pdf")
       expect(response.body).to start_with("%PDF")
     end
+
+    # Tests compile assets on the fly; production only serves precompiled ones.
+    it "precompiles the PDF stylesheet for production" do
+      expect(Rails.application.precompiled_assets).to include("pdf.css")
+    end
   end
 end
