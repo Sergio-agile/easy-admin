@@ -58,6 +58,10 @@ gem "wicked_pdf"
 gem "wkhtmltopdf-binary"
 gem "rack-attack"
 
+# Only dev/test gems depend on json; declare it so production gets the locked
+# version instead of the older default gem bundled with Ruby.
+gem "json"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
