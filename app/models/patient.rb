@@ -3,11 +3,11 @@
 # Table name: patients
 #
 #  id         :bigint           not null, primary key
+#  address    :string
+#  birth_date :string
 #  first_name :string
 #  last_name  :string
-#  birth_date :string
 #  phone      :string
-#  address    :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

@@ -1,4 +1,4 @@
 ---
-# Rails 7.2 is end-of-life (2026-08-09). Re-enable this check with Rails 8.0.
+# Rails 8.0 security support ends 2026-11-07. Re-enable this check with Rails 8.1.
 :skip_checks:
   - CheckEOLRails
