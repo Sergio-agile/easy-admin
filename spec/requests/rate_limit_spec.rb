@@ -3,7 +3,12 @@ require 'rails_helper'
 RSpec.describe "Rate limiting", type: :request do
   let!(:user) { User.create!(email: "user@example.com", password: "secret-password") }
 
-  before { Rack::Attack.reset! }
+  # Throttles count per fixed window; freeze time at an hour boundary so no
+  # example straddles two windows and sees its counter reset.
+  before do
+    Rack::Attack.reset!
+    travel_to Time.current.beginning_of_hour
+  end
 
   def attempt_login(email:, password: "wrong", ip: "1.2.3.4")
     post session_path, params: { user: { email: email, password: password } }, env: { "REMOTE_ADDR" => ip }

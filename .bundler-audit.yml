@@ -1,7 +1,0 @@
----
-# Known advisories that need Puma >= 7.2.1. Remove each entry once its gem is
-# updated. Any advisory not listed here fails CI.
-ignore:
-  # puma 6.6.1
-  - GHSA-qpgp-93vx-g8v8
-  - GHSA-2vqw-3mp8-cgmx
