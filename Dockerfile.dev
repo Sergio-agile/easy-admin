@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1
 
 # Development image: code is mounted as a volume by docker-compose.yml
-ARG RUBY_VERSION=3.4.11
+ARG RUBY_VERSION=4.0.8
 FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim
 
 WORKDIR /rails
