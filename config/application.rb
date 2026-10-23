@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module EasyAdmin
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 8.0
+    config.load_defaults 8.1
 
     # YJIT trades memory for speed; keep it off on the 1 GB droplet until measured.
     config.yjit = false

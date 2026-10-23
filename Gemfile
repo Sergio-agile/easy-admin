@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby "3.4.11"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.0"
+gem "rails", "~> 8.1.0"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -59,9 +59,8 @@ gem "wkhtmltopdf-binary"
 gem "rack-attack"
 
 # Only dev/test gems depend on json; declare it so production gets the locked
-# version instead of the older default gem bundled with Ruby. ActiveSupport 8.0
-# still passes `quirks_mode`, which json 3 rejects; drop the pin with Rails 8.1.
-gem "json", "~> 2.21"
+# version instead of the older default gem bundled with Ruby.
+gem "json"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
