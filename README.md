@@ -4,7 +4,7 @@
 
 Patient and consultation manager for an osteopathy practice: patient records, consultation notes with rich text, and PDF reports to send to patients.
 
-**Stack:** Ruby on Rails 8.0, PostgreSQL, Hotwire (Turbo + Stimulus), Action Text, Bootstrap, wicked_pdf. Deployed with Docker Compose.
+**Stack:** Ruby on Rails 8.1, PostgreSQL, Hotwire (Turbo + Stimulus), Action Text, Bootstrap, wicked_pdf. Deployed with Docker Compose.
 
 ## Running locally
 

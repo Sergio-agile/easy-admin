@@ -1,4 +1,0 @@
----
-# Rails 8.0 security support ends 2026-11-07. Re-enable this check with Rails 8.1.
-:skip_checks:
-  - CheckEOLRails
