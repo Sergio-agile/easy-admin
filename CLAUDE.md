@@ -35,7 +35,3 @@ CI (`.github/workflows/ci.yml`) runs all four on every PR and on `main`.
 - Request specs for behavior (`spec/requests`), model specs for validations and scopes.
 - Keep the suite fast: prefer `build` over `create`, create only the records a test needs, and avoid factory callbacks that create associations by default.
 - `sign_in(user)` from `spec/support/authentication_helpers.rb` logs a user in for request specs.
-
-## Known exceptions (remove with the Ruby/Rails upgrade)
-
-- `.bundler-audit.yml` ignores advisories fixed only by Puma >= 7.2.1.
