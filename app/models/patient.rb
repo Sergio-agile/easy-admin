@@ -16,4 +16,11 @@ class Patient < ApplicationRecord
 
   validates :first_name, presence: true, allow_blank: false
   validates :last_name, presence: true, allow_blank: false
+
+  scope :search, ->(term) {
+    if term.present?
+      pattern = "%#{sanitize_sql_like(term.to_s.strip)}%"
+      where(arel_table[:first_name].matches(pattern).or(arel_table[:last_name].matches(pattern)))
+    end
+  }
 end

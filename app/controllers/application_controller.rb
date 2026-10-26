@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::Base
-  include Pagy::Backend
-
   SESSION_IDLE_TIMEOUT = 2.hours
 
   before_action :expire_idle_session

@@ -50,4 +50,28 @@ RSpec.describe Patient, type: :model do
   describe 'associations' do
     it { should have_many(:consultations).dependent(:destroy) }
   end
+
+  describe '.search' do
+    let!(:ana) { Patient.create!(first_name: "Ana", last_name: "López") }
+    let!(:berta) { Patient.create!(first_name: "Berta", last_name: "Anaya") }
+    let!(:underscore) { Patient.create!(first_name: "Car_men", last_name: "Ruiz") }
+
+    it 'matches first or last name, case insensitive' do
+      expect(Patient.search("ANA")).to contain_exactly(ana, berta)
+    end
+
+    it 'ignores surrounding whitespace' do
+      expect(Patient.search(" lópez ")).to contain_exactly(ana)
+    end
+
+    it 'treats LIKE wildcards literally' do
+      expect(Patient.search("_")).to contain_exactly(underscore)
+      expect(Patient.search("%")).to be_empty
+    end
+
+    it 'returns every patient for a blank term' do
+      expect(Patient.search(nil)).to contain_exactly(ana, berta, underscore)
+      expect(Patient.search(" ")).to contain_exactly(ana, berta, underscore)
+    end
+  end
 end

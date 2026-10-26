@@ -27,13 +27,27 @@ RSpec.describe "Consultations", type: :request do
       expect(response.body).not_to include("Carmen")
     end
 
-    it "answers turbo stream requests for the search box" do
+    it "submits the search form to the consultations list" do
+      get consultations_path
+
+      expect(response.body).to include(%(action="#{consultations_path}"))
+    end
+
+    it "loads the patients without one query per row" do
+      create(:patient)
+      one_patient = count_queries { get consultations_path }
+      create_list(:patient, 2)
+
+      expect(count_queries { get consultations_path }).to eq(one_patient)
+    end
+
+    it "answers turbo frame requests for the search box without the layout" do
       consultation
 
-      get consultations_path, params: { term: "ana" }, as: :turbo_stream
+      get consultations_path, params: { term: "ana" }, headers: { "Turbo-Frame" => "consultations" }
 
-      expect(response.media_type).to eq(Mime[:turbo_stream])
-      expect(response.body).to include("López")
+      expect(response.body).to match(/<turbo-frame [^>]*id="consultations"/).and include("López")
+      expect(response.body).not_to include("side-menu")
     end
   end
 

@@ -201,7 +201,6 @@ GEM
     nokogiri (1.19.4-x86_64-linux-gnu)
       racc (~> 1.4)
     ostruct (0.6.3)
-    pagy (9.4.0)
     parallel (1.28.0)
     parser (3.3.12.0)
       ast (~> 2.4.1)
@@ -284,8 +283,6 @@ GEM
     regexp_parser (2.13.1)
     reline (0.7.0)
       io-console (~> 0.5)
-    requestjs-rails (0.0.14)
-      railties (>= 7.1.0)
     rexml (3.4.4)
     rspec-core (3.13.6)
       rspec-support (~> 3.13.0)
@@ -423,7 +420,6 @@ DEPENDENCIES
   json
   kaminari
   memory_profiler
-  pagy
   pg (~> 1.1)
   pry-rails
   puma (~> 7.2)
@@ -431,7 +427,6 @@ DEPENDENCIES
   rack-mini-profiler
   rails (~> 8.1.0)
   redis (>= 4.0.1)
-  requestjs-rails
   rspec-rails
   rubocop-rails-omakase
   sassc-rails

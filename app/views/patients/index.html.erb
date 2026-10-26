@@ -25,19 +25,18 @@
 <%= content_for :contents do %>
   <div class="container pt-5">
     <div class="row" >
-      <div class="col"> <!-- put this in contents for title -->
+      <div class="col">
         <h1 class="page-header ">Patients</h1>
       </div>
-      <div class="col text-end"> <!-- put this in contents for actions -->
+      <div class="col text-end">
         <%= link_to 'New Patient', new_patient_path, class: "btn btn-success px-4 rounded-pill" %>
       </div>
     </div>
-    <div data-controller="filter">
-      <%= search_filter 'patients' %> <!-- put this in contents for actions / filters -->
+    <%= render "search_form", url: patients_path, frame: "patients" %>
+    <%= turbo_frame_tag "patients", data: { turbo_action: "advance" } do %>
       <%= render "table" %>
-    </div>
-    <%= render "pagination", pagy: @pagy %>
-
+      <%= paginate @patients %>
+    <% end %>
   </div>
 <% end %>
 

@@ -39,4 +39,16 @@ RSpec.describe Consultation, type: :model do
       expect(consultation.errors[:patient]).to include("must exist")
     end
   end
+
+  describe '.search' do
+    it 'matches the patient name' do
+      ana = Patient.create!(first_name: "Ana", last_name: "López")
+      carmen = Patient.create!(first_name: "Carmen", last_name: "Ruiz")
+      consultation = ana.consultations.create!
+      carmen.consultations.create!
+
+      expect(Consultation.search("lóp")).to contain_exactly(consultation)
+      expect(Consultation.search("")).to contain_exactly(consultation, carmen.consultations.first)
+    end
+  end
 end

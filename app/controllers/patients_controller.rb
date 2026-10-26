@@ -3,12 +3,7 @@ class PatientsController < ApplicationController
   before_action { sidemenu_active(:patients) }
 
   def index
-    patients
-
-    respond_to do |format|
-      format.html
-      format.turbo_stream
-    end
+    @patients = Patient.search(params[:term]).order(created_at: :desc).page(params[:page])
   end
 
   def show
@@ -54,18 +49,5 @@ class PatientsController < ApplicationController
 
   def patient_params
     params.require(:patient).permit(:first_name, :last_name, :birth_date, :phone, :address, :email, :dni)
-  end
-
-  def patients
-    @pagy, @patients = pagy(filtered_patients.order(created_at: :desc))
-  end
-
-  def filtered_patients
-    if params["term"].present?
-      term = "%#{params['term']}%"
-      Patient.where("first_name ILIKE ? OR last_name ILIKE ?", term, term)
-    else
-      Patient.all
-    end
   end
 end

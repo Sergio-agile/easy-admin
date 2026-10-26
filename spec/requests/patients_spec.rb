@@ -26,14 +26,29 @@ RSpec.describe "Patients", type: :request do
       expect(response.body).not_to include("Carmen")
     end
 
+    it "treats LIKE wildcards in the search term literally" do
+      create(:patient, first_name: "Ana")
+
+      get patients_path, params: { term: "%" }
+
+      expect(response.body).not_to include("Ana")
+    end
+
+    it "submits the search form to the patients list" do
+      get patients_path
+
+      expect(response.body).to include(%(action="#{patients_path}"))
+    end
+
     it "paginates the results" do
-      Patient.insert_all(Array.new(Pagy::DEFAULT[:limit] + 1) { |i|
+      per_page = Patient.default_per_page
+      Patient.insert_all(Array.new(per_page + 1) { |i|
         { first_name: "Patient#{i}", last_name: "Test", created_at: i.minutes.ago, updated_at: Time.current }
       })
 
       get patients_path
 
-      last = "<td data-label=\"First Name\">Patient#{Pagy::DEFAULT[:limit]}</td>"
+      last = "<td data-label=\"First Name\">Patient#{per_page}</td>"
       expect(response.body).to include("Patient0")
       expect(response.body).not_to include(last)
 
@@ -41,13 +56,21 @@ RSpec.describe "Patients", type: :request do
       expect(response.body).to include(last)
     end
 
-    it "answers turbo stream requests for the search box" do
+    it "keeps the search term in the pagination links" do
+      create_list(:patient, Patient.default_per_page + 1, first_name: "Ana")
+
+      get patients_path, params: { term: "ana" }
+
+      expect(response.body).to include(%(href="#{ERB::Util.h(patients_path(page: 2, term: "ana"))}"))
+    end
+
+    it "answers turbo frame requests for the search box without the layout" do
       create(:patient, first_name: "Ana")
 
-      get patients_path, params: { term: "ana" }, as: :turbo_stream
+      get patients_path, params: { term: "ana" }, headers: { "Turbo-Frame" => "patients" }
 
-      expect(response.media_type).to eq(Mime[:turbo_stream])
-      expect(response.body).to include('target="patients-table"', "Ana")
+      expect(response.body).to match(/<turbo-frame [^>]*id="patients"/).and include("Ana")
+      expect(response.body).not_to include("side-menu")
     end
   end
 
