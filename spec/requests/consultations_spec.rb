@@ -129,6 +129,25 @@ RSpec.describe "Consultations", type: :request do
       expect(response.body).to start_with("%PDF")
     end
 
+    it "puts the report contents in the PDF" do
+      consultation.update!(notes_to_send: "<ul><li>Hacer estiramientos</li><li>Caminar 30 minutos</li></ul>")
+
+      get download_consultation_path(consultation, format: :pdf)
+
+      pdf = PDF::Reader.new(StringIO.new(response.body))
+      text = pdf.pages.map(&:text).join("\n")
+      expect(pdf.page_count).to eq(1)
+      expect(text).to include(
+        "Informe de la consulta",
+        "Ariadne Spiegel Schmidt",
+        "Fecha de la consulta: #{consultation.date.strftime('%d-%m-%Y')}",
+        "Paciente: Ana López",
+        "Hacer estiramientos",
+        "Caminar 30 minutos"
+      )
+      expect(text).not_to include("Download PDF")
+    end
+
     # Tests compile assets on the fly; production only serves precompiled ones.
     it "precompiles the PDF stylesheet for production" do
       expect(Rails.application.precompiled_assets).to include("pdf.css")

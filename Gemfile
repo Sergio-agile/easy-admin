@@ -95,5 +95,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  # Reads the text of generated PDFs in specs
+  gem "pdf-reader"
   gem "shoulda-matchers"
 end
