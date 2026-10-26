@@ -1,0 +1,14 @@
+<div class="report-header">
+  <h1>Informe de la consulta</h1>
+  <p>Ariadne Spiegel Schmidt</p>
+  <%= image_tag @report.logo_data_uri, size: "200x150", alt: "" %>
+</div>
+
+<div class="report-details">
+  <p>Fecha de la consulta: <%= @report.date.strftime("%d-%m-%Y") %></p>
+  <p>Paciente: <%= @report.patient_name %></p>
+</div>
+
+<div class="report-notes">
+  <%= @report.notes_to_send %>
+</div>

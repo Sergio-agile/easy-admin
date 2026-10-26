@@ -1,6 +1,6 @@
 # easy-admin
 
-Patient and consultation manager for a single osteopathy practice. Rails 8.1, PostgreSQL, Hotwire, Bootstrap, wicked_pdf.
+Patient and consultation manager for a single osteopathy practice. Rails 8.1, PostgreSQL, Hotwire, Bootstrap, Ferrum (headless Chromium) for PDFs.
 
 ## Development
 

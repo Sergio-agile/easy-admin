@@ -29,3 +29,5 @@
 
 en:
   hello: "Hello world"
+  consultation_report:
+    filename: "informe-%{patient}-%{date}.pdf"

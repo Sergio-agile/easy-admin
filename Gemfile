@@ -52,8 +52,8 @@ gem "bootstrap"
 gem "faker"
 gem "simple_form"
 gem "kaminari"
-gem "wicked_pdf"
-gem "wkhtmltopdf-binary"
+# Renders the consultation report to PDF with headless Chromium (no Node)
+gem "ferrum"
 gem "rack-attack"
 
 # Only dev/test gems depend on json; declare it so production gets the locked

@@ -62,9 +62,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Install wkhtmltopdf libraries
-        run: sudo apt-get update -qq && sudo apt-get install --no-install-recommends -y libxrender1 libxext6 libfontconfig1 libjpeg-turbo8 fonts-dejavu-core
-
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
