@@ -69,6 +69,15 @@ RSpec.describe Patient, type: :model do
       expect(Patient.search("%")).to be_empty
     end
 
+    it 'ranks first name prefixes, then last name prefixes, then other matches, alphabetically within each' do
+      maybell = Patient.create!(first_name: "Maybell", last_name: "Ruiz")
+      belen = Patient.create!(first_name: "Belén", last_name: "Sanz")
+      robles = Patient.create!(first_name: "Carmen", last_name: "Belmonte")
+      belva = Patient.create!(first_name: "Belva", last_name: "Ortiz")
+
+      expect(Patient.search("bel")).to eq([ belen, belva, robles, maybell ])
+    end
+
     it 'returns every patient for a blank term' do
       expect(Patient.search(nil)).to contain_exactly(ana, berta, underscore)
       expect(Patient.search(" ")).to contain_exactly(ana, berta, underscore)
