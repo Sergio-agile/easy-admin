@@ -14,11 +14,10 @@
       <%= link_to 'New consultation', '', class: 'btn btn-success px-4 rounded-pill' %>
       </div>
     </div>
-    <div data-controller="filter">
-      <%= search_filter 'consultations' %>
-      <%# <% render @consultations  %>
-      <%= render partial: "table" %>
-      <%= render "pagination", pagy: @pagy %>
-    </div>
+    <%= render "search_form", url: consultations_path, frame: "consultations" %>
+    <%= turbo_frame_tag "consultations", data: { turbo_action: "advance" } do %>
+      <%= render "table" %>
+      <%= paginate @consultations %>
+    <% end %>
   </div>
 <% end %>

@@ -1,0 +1,3 @@
+<%= form_with url: url, method: :get, data: { turbo_frame: frame, turbo_action: "replace", controller: "auto-submit", action: "input->auto-submit#submit" } do |form| %>
+  <%= form.search_field :term, value: params[:term], placeholder: "Search", autocomplete: "off", class: "form-control", aria: { label: "Search" } %>
+<% end %>

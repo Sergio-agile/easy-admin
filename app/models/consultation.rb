@@ -24,4 +24,6 @@ class Consultation < ApplicationRecord
   has_rich_text :notes_before
   has_rich_text :notes_after
   has_rich_text :notes_to_send
+
+  scope :search, ->(term) { joins(:patient).merge(Patient.search(term)) if term.present? }
 end

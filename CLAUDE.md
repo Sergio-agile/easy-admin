@@ -30,6 +30,12 @@ CI (`.github/workflows/ci.yml`) runs all four on every PR and on `main`.
 - Patient data is health data: filter new personal fields from logs (`config/initializers/filter_parameter_logging.rb`) and keep every page behind `authenticate_user!`.
 - New gems need a reason; prefer what Rails ships with.
 
+## Design and performance
+
+- Before changing a feature, look for the Rails-idiomatic design: scopes and concerns in models, POROs for domain objects (e.g. a report), Turbo Frames for partial page updates, shared partials instead of duplicated ones. Refactor the code you touch, not the whole app.
+- Check performance on every change: no N+1 (`includes`), indexes for new query columns, paginated lists, and memory (production has 1 GB RAM).
+- When replacing a dependency, write specs of the current behavior first, then swap.
+
 ## Tests
 
 - Request specs for behavior (`spec/requests`), model specs for validations and scopes.

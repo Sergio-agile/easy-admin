@@ -39,4 +39,23 @@ RSpec.describe Consultation, type: :model do
       expect(consultation.errors[:patient]).to include("must exist")
     end
   end
+
+  describe '.search' do
+    it 'matches the patient name' do
+      ana = Patient.create!(first_name: "Ana", last_name: "López")
+      carmen = Patient.create!(first_name: "Carmen", last_name: "Ruiz")
+      consultation = ana.consultations.create!
+      carmen.consultations.create!
+
+      expect(Consultation.search("lóp")).to contain_exactly(consultation)
+      expect(Consultation.search("")).to contain_exactly(consultation, carmen.consultations.first)
+    end
+
+    it 'ranks consultations by how well the patient name matches' do
+      maybell = Patient.create!(first_name: "Maybell", last_name: "Ruiz").consultations.create!
+      belva = Patient.create!(first_name: "Belva", last_name: "Ortiz").consultations.create!
+
+      expect(Consultation.search("bel")).to eq([ belva, maybell ])
+    end
+  end
 end

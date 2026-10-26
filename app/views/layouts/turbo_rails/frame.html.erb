@@ -1,0 +1,10 @@
+<%# Overrides turbo-rails' frame layout: our views render into content_for :contents, not the main yield. %>
+<html>
+  <head>
+    <%= yield :head %>
+  </head>
+  <body>
+    <%= yield :contents %>
+    <%= yield %>
+  </body>
+</html>

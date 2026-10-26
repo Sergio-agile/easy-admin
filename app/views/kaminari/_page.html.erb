@@ -1,9 +1,5 @@
 <% if page.current? %>
-  <li class="page-item active">
-    <%= content_tag :a, page, data: { remote: remote }, rel: page.rel, class: 'page-link' %>
-  </li>
+  <li class="page-item active" aria-current="page"><span class="page-link"><%= page %></span></li>
 <% else %>
-  <li class="page-item">
-    <%= link_to page, url, remote: remote, rel: page.rel, class: 'page-link' %>
-  </li>
+  <li class="page-item"><%= link_to page, url, rel: page.rel, class: "page-link" %></li>
 <% end %>
