@@ -15,7 +15,7 @@
       </div>
     </div>
     <%= render "search_form", url: consultations_path, frame: "consultations" %>
-    <%= turbo_frame_tag "consultations", data: { turbo_action: "advance" } do %>
+    <%= turbo_frame_tag "consultations", target: "_top" do %>
       <%= render "table" %>
       <%= paginate @consultations %>
     <% end %>
