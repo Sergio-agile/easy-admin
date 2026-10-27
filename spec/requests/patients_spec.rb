@@ -15,6 +15,13 @@ RSpec.describe "Patients", type: :request do
       expect(response.body).to include("Ana", "López", patient_path(ana))
     end
 
+    # Only the search form updates the results frame; "View" and pagination must load the whole page.
+    it "makes links in the results frame navigate the whole page" do
+      get patients_path
+
+      expect(response.body).to include('<turbo-frame id="patients" target="_top">')
+    end
+
     it "filters by first or last name, case insensitive" do
       create(:patient, first_name: "Ana", last_name: "López")
       create(:patient, first_name: "Berta", last_name: "Anaya")

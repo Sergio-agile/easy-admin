@@ -17,6 +17,13 @@ RSpec.describe "Consultations", type: :request do
       expect(response.body).to include("López", edit_patient_consultation_path(patient, consultation))
     end
 
+    # Only the search form updates the results frame; "Edit" and pagination must load the whole page.
+    it "makes links in the results frame navigate the whole page" do
+      get consultations_path
+
+      expect(response.body).to include('<turbo-frame id="consultations" target="_top">')
+    end
+
     it "filters by patient name" do
       consultation
       create(:patient, first_name: "Carmen", last_name: "Ruiz")
