@@ -52,8 +52,8 @@ gem "bootstrap"
 gem "faker"
 gem "simple_form"
 gem "kaminari"
-gem "wicked_pdf"
-gem "wkhtmltopdf-binary"
+# Renders the consultation report to PDF with headless Chromium (no Node)
+gem "ferrum"
 gem "rack-attack"
 
 # Only dev/test gems depend on json; declare it so production gets the locked
@@ -95,5 +95,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  # Reads the text of generated PDFs in specs
+  gem "pdf-reader"
   gem "shoulda-matchers"
 end

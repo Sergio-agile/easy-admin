@@ -23,6 +23,8 @@ services:
 
   web:
     build: .
+    # Reaps the processes Chromium leaves behind when it quits (PID 1 is Puma otherwise)
+    init: true
     restart: unless-stopped
     environment:
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:?missing}

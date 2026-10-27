@@ -118,6 +118,7 @@ RSpec.describe "Consultations", type: :request do
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("Hacer estiramientos", "Ana", consultation.date.strftime("%d-%m-%Y"))
       expect(response.body).to include(download_consultation_path(consultation, format: :pdf))
+      expect(response.body).to include(edit_patient_consultation_path(patient, consultation))
     end
 
     it "downloads the report as a PDF" do
@@ -125,13 +126,28 @@ RSpec.describe "Consultations", type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(response.media_type).to eq("application/pdf")
-      expect(response.headers["Content-Disposition"]).to include("attachment", "report.pdf")
+      expect(response.headers["Content-Disposition"]).to include("attachment", "informe-ana-lopez-#{consultation.date.iso8601}.pdf")
       expect(response.body).to start_with("%PDF")
     end
 
-    # Tests compile assets on the fly; production only serves precompiled ones.
-    it "precompiles the PDF stylesheet for production" do
-      expect(Rails.application.precompiled_assets).to include("pdf.css")
+    it "puts the report contents in the PDF" do
+      consultation.update!(notes_to_send: "<ul><li>Hacer estiramientos</li><li>Caminar 30 minutos</li></ul>")
+
+      get download_consultation_path(consultation, format: :pdf)
+
+      pdf = PDF::Reader.new(StringIO.new(response.body))
+      text = pdf.pages.map(&:text).join("\n")
+      expect(pdf.page_count).to eq(1)
+      expect(text).to include(
+        "Informe de la consulta",
+        "Ariadne Spiegel Schmidt",
+        "Fecha de la consulta: #{consultation.date.strftime('%d-%m-%Y')}",
+        "Paciente: Ana López",
+        "Hacer estiramientos",
+        "Caminar 30 minutos"
+      )
+      expect(text).not_to include("Download PDF", "Back to the consultation")
+      expect(pdf.pages.first.xobjects).not_to be_empty # the logo
     end
   end
 end

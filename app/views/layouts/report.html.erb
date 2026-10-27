@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Informe de la consulta</title>
+    <%# Inline: the PDF renderer loads nothing over the network %>
+    <style>
+      @page { size: A4; margin: 0; }
+      body { margin: 0; font-family: "DejaVu Sans", sans-serif; color: #212529; background: #fff; }
+      .report-toolbar { display: flex; justify-content: space-between; padding: 1rem 2rem; }
+      .report-toolbar a { color: #6797dc; }
+      .report-toolbar .report-download { padding: .5rem 1.25rem; border-radius: 2rem; background: #6797dc; color: #fff; text-decoration: none; }
+      .report-header { padding: 1.5rem; background: #6797dc; color: #fff; text-align: center; }
+      .report-header h1 { margin: 0 0 .5rem; }
+      .report-header p { margin: 0 0 1rem; }
+      .report-header img { display: block; margin: 0 auto; }
+      .report-details { margin: 1.5rem 0; text-align: center; }
+      .report-details p { margin: .3rem 0; }
+      .report-notes { margin: 0 3rem 3rem; line-height: 1.5; }
+      .report-notes img { max-width: 100%; height: auto; }
+    </style>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>

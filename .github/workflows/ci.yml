@@ -42,6 +42,9 @@ jobs:
 
   test:
     runs-on: ubuntu-24.04
+    # Same Debian base and Chromium package as the production image, so the
+    # PDF specs exercise the browser that ships (the runner's Google Chrome differs)
+    container: ruby:4.0.8-slim
 
     services:
       postgres:
@@ -49,25 +52,30 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        ports:
-          - 5432:5432
         options: --health-cmd="pg_isready -U postgres" --health-interval=5s --health-timeout=5s --health-retries=10
 
     env:
       RAILS_ENV: test
-      DATABASE_HOST: localhost
+      DATABASE_HOST: postgres
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: postgres
+      BUNDLE_PATH: vendor/bundle
 
     steps:
+      - name: Install system packages
+        run: |
+          apt-get update -qq
+          apt-get install --no-install-recommends -y build-essential git libpq-dev libyaml-dev pkg-config nodejs chromium fonts-dejavu-core
+
       - uses: actions/checkout@v5
 
-      - name: Install wkhtmltopdf libraries
-        run: sudo apt-get update -qq && sudo apt-get install --no-install-recommends -y libxrender1 libxext6 libfontconfig1 libjpeg-turbo8 fonts-dejavu-core
-
-      - uses: ruby/setup-ruby@v1
+      - uses: actions/cache@v4
         with:
-          bundler-cache: true
+          path: vendor/bundle
+          key: gems-${{ hashFiles('.ruby-version', 'Gemfile.lock') }}
+
+      - name: Install gems
+        run: bundle install --jobs 4
 
       - name: Set up database
         run: bin/rails db:create db:schema:load

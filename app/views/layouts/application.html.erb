@@ -16,7 +16,7 @@
     <nav class="navbar">
       <div class="container-fluid justify-content-between">
         <%= link_to home_path do %>
-          <%= image_tag wicked_pdf_asset_base64('logo-infinito.png'), size: "70x50" %>
+          <%= image_tag 'logo-infinito.png', size: "70x50" %>
         <% end %>
         <% if current_user_signed_in? %>
           <%= button_to 'Log Out', session_path, method: :delete, class: 'btn btn-light px-4 rounded-pill' %>

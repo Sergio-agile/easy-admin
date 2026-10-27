@@ -8,10 +8,10 @@ WORKDIR /rails
 
 ENV BUNDLE_PATH="/usr/local/bundle"
 
-# Build tools, Postgres client and the libraries wkhtmltopdf needs
+# Build tools, Postgres client and Chromium for the PDF reports
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential curl git libpq-dev libvips libyaml-dev pkg-config \
-    postgresql-client libxrender1 libxext6 libfontconfig1 libjpeg62-turbo fonts-dejavu-core && \
+    postgresql-client chromium fonts-dejavu-core && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install JavaScript dependencies

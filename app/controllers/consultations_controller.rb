@@ -1,6 +1,4 @@
 class ConsultationsController < ApplicationController
-  include ::PdfRendererConcern
-
   before_action :authenticate_user!
   before_action { sidemenu_active(:consultations) }
 
@@ -45,13 +43,11 @@ class ConsultationsController < ApplicationController
   end
 
   def download
-    @consultation = Consultation.find(params[:id])
-    notes_to_send = render_to_string(template: "consultations/download", layout: "pdf", formats: [ :html ])
+    @report = ConsultationReport.new(Consultation.includes(:patient, :rich_text_notes_to_send).find(params[:id]))
 
     respond_to do |format|
-      format.html { render html: notes_to_send }
-      format.pdf { render_pdf notes_to_send, filename: "report.pdf", layout: "pdf" }
-      # format.pdf { render_pdf notes_to_send, filename: t(".filename", id: @consultation.id) }
+      format.html { render layout: "report" }
+      format.pdf { send_data @report.to_pdf, filename: @report.filename, type: :pdf, disposition: :attachment }
     end
   end
 
