@@ -11,6 +11,15 @@ RSpec.describe PdfRenderer do
     expect(text_of(pdf)).to include("Hacer estiramientos")
   end
 
+  # Production (1 vCPU, swap in use) needed more than Ferrum's 5 s default to open the page.
+  it "gives Chromium time to start on a slow server" do
+    expect(Ferrum::Browser).to receive(:new)
+      .with(hash_including(process_timeout: 30, protocol_timeout: 30, timeout: 30))
+      .and_call_original
+
+    described_class.render("<p>ok</p>")
+  end
+
   it "does not run JavaScript" do
     pdf = described_class.render(%(<p id="notes">Notas</p><script>document.getElementById("notes").textContent = "JS ran"</script>))
 
