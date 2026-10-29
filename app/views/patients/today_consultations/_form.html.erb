@@ -1,0 +1,17 @@
+<%= turbo_frame_tag 'today_consultation' do %>
+  <div class="card mt-4">
+    <div class="card-header d-flex justify-content-between">
+      <h5 class="mt-1">Today's consultation · <%= l consultation.date, format: '%d-%m-%Y' %></h5>
+      <% if consultation.persisted? %>
+        <%= link_to 'PDF', download_consultation_path(consultation), class: 'btn btn-secondary btn-sm px-3 rounded-pill', data: { turbo_frame: '_top' } %>
+      <% end %>
+    </div>
+    <div class="card-body">
+      <%= simple_form_for consultation, url: patient_today_consultation_path(patient), method: :patch, namespace: 'today_consultation' do |f| %>
+        <%= render 'consultations/notes_fields', f: f %>
+        <%= f.submit 'Save', class: 'btn btn-success px-4 rounded-pill' %>
+        <span class="text-success ms-2"><%= local_assigns[:message] %></span>
+      <% end %>
+    </div>
+  </div>
+<% end %>

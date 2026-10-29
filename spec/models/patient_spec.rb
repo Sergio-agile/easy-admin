@@ -83,4 +83,19 @@ RSpec.describe Patient, type: :model do
       expect(Patient.search(" ")).to contain_exactly(ana, berta, underscore)
     end
   end
+
+  describe '#today_consultation' do
+    let(:patient) { Patient.create!(first_name: "Ana", last_name: "López") }
+
+    it 'finds the consultation dated today' do
+      patient.consultations.create!(date: Date.yesterday)
+      today = patient.consultations.create!(date: Date.current)
+
+      expect(patient.today_consultation).to eq(today)
+    end
+
+    it 'starts a new one for today when there is none' do
+      expect(patient.today_consultation).to be_new_record.and have_attributes(date: Date.current)
+    end
+  end
 end

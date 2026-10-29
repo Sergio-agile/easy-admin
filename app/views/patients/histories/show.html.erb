@@ -1,0 +1,27 @@
+<%= content_for :breadcrumbs do %>
+  <%= breadcrumb_list do %>
+    <%= breadcrumb_item 'Patients', patients_path %>
+    <%= breadcrumb_item 'Patient', patient_path(@patient) %>
+    <%= breadcrumb_item 'History' %>
+  <% end %>
+<% end %>
+
+<%= content_for :contents do %>
+  <div class="container pt-5 mb-5" data-controller="history" data-action="turbo:before-frame-render->history#beforeFrameRender turbo:frame-render->history#frameRender">
+    <h1>History</h1>
+    <h2>for <%= @patient.first_name %> <%= @patient.last_name %></h2>
+
+    <%= render 'page', patient: @patient, consultations: @consultations %>
+
+    <%= render 'patients/today_consultations/form', patient: @patient, consultation: @today %>
+
+    <div class="position-fixed bottom-0 end-0 m-4 d-flex flex-column align-items-end gap-2" style="z-index: 1030">
+      <button type="button" class="btn btn-secondary rounded-pill shadow" data-action="history#toStart" title="Go to the first consultation">
+        <i class="fa-solid fa-arrow-up"></i> First
+      </button>
+      <%= link_to patient_path(@patient), class: 'btn btn-success rounded-pill shadow' do %>
+        <i class="fa-solid fa-arrow-left"></i> Back to patient
+      <% end %>
+    </div>
+  </div>
+<% end %>

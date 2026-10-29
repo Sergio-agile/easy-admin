@@ -17,6 +17,11 @@ class Patient < ApplicationRecord
   validates :first_name, presence: true, allow_blank: false
   validates :last_name, presence: true, allow_blank: false
 
+  # A patient comes at most once a day, so today's notes all go to one consultation.
+  def today_consultation
+    consultations.with_all_rich_text.find_or_initialize_by(date: Date.current)
+  end
+
   # Matches first or last name, ranking first name prefixes, then last name prefixes, then the rest.
   def self.search(term)
     return all if term.blank?

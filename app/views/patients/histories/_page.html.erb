@@ -1,0 +1,9 @@
+<%# One page of the history, oldest first. The frame for the next (older) page loads when scrolled into view. %>
+<%= turbo_frame_tag "history_page_#{consultations.current_page}" do %>
+  <% if consultations.next_page %>
+    <%= turbo_frame_tag "history_page_#{consultations.next_page}", src: patient_history_path(patient, page: consultations.next_page), loading: :lazy do %>
+      <p class="text-center text-muted my-3">Loading older consultations…</p>
+    <% end %>
+  <% end %>
+  <%= render partial: 'patients/history_entries/entry', collection: consultations.reverse, as: :consultation, locals: { patient: patient } %>
+<% end %>

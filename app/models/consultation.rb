@@ -13,7 +13,7 @@
 #
 # Indexes
 #
-#  index_consultations_on_patient_id  (patient_id)
+#  index_consultations_on_patient_id_and_date  (patient_id,date)
 #
 # Foreign Keys
 #
@@ -25,5 +25,9 @@ class Consultation < ApplicationRecord
   has_rich_text :notes_after
   has_rich_text :notes_to_send
 
+  NOTES = %i[notes_before notes_after notes_to_send].freeze
+
   scope :search, ->(term) { joins(:patient).merge(Patient.search(term)) if term.present? }
+  # Newest first, with the notes loaded.
+  scope :history, -> { with_all_rich_text.order(date: :desc, id: :desc) }
 end

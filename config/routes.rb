@@ -20,6 +20,11 @@ Rails.application.routes.draw do
   resources :patients do
     get :cancel_edit, on: :member
     resources :consultations
+    scope module: :patients do
+      resource :history, only: :show
+      resources :history_entries, only: %i[show edit update]
+      resource :today_consultation, only: %i[show update]
+    end
   end
 
   resources :consultations do
