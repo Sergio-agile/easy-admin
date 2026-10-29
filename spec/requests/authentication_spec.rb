@@ -19,6 +19,12 @@ RSpec.describe "Authentication", type: :request do
     "edit consultation"    => -> { [ :get, edit_patient_consultation_path(patient, consultation) ] },
     "update consultation"  => -> { [ :patch, patient_consultation_path(patient, consultation) ] },
     "download consultation" => -> { [ :get, download_consultation_path(consultation, format: :pdf) ] },
+    "patient history"      => -> { [ :get, patient_history_path(patient) ] },
+    "history entry"        => -> { [ :get, patient_history_entry_path(patient, consultation) ] },
+    "edit history entry"   => -> { [ :get, edit_patient_history_entry_path(patient, consultation) ] },
+    "update history entry" => -> { [ :patch, patient_history_entry_path(patient, consultation) ] },
+    "today consultation"   => -> { [ :get, patient_today_consultation_path(patient) ] },
+    "save today consultation" => -> { [ :patch, patient_today_consultation_path(patient) ] },
     "edit password"        => -> { [ :get, edit_password_path ] },
     "update password"      => -> { [ :patch, password_path ] }
   }.each do |name, route|

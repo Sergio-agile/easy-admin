@@ -1,0 +1,3 @@
+<% Consultation::NOTES.each do |notes| %>
+  <%= f.input notes, as: :rich_text_area, input_html: { style: 'overflow: auto' } %>
+<% end %>

@@ -13,7 +13,7 @@
 #
 # Indexes
 #
-#  index_consultations_on_patient_id  (patient_id)
+#  index_consultations_on_patient_id_and_date  (patient_id,date)
 #
 # Foreign Keys
 #
@@ -56,6 +56,17 @@ RSpec.describe Consultation, type: :model do
       belva = Patient.create!(first_name: "Belva", last_name: "Ortiz").consultations.create!
 
       expect(Consultation.search("bel")).to eq([ belva, maybell ])
+    end
+  end
+
+  describe '.history' do
+    it 'orders newest first, by date then creation' do
+      patient = Patient.create!(first_name: "Ana", last_name: "López")
+      old = patient.consultations.create!(date: Date.new(2026, 1, 1))
+      first_same_day = patient.consultations.create!(date: Date.new(2026, 2, 1))
+      second_same_day = patient.consultations.create!(date: Date.new(2026, 2, 1))
+
+      expect(Consultation.history).to eq([ second_same_day, first_same_day, old ])
     end
   end
 end

@@ -68,13 +68,13 @@ RSpec.describe "Consultations", type: :request do
   end
 
   describe "POST /patients/:patient_id/consultations" do
-    it "creates the consultation with today's date and rich text notes" do
+    it "creates the consultation with today's date and rich text notes, and stays on it" do
       params = { consultation: { notes_before: "<p>Dolor <strong>lumbar</strong></p>", notes_after: "Mejora", notes_to_send: "Ejercicios" } }
 
       expect { post patient_consultations_path(patient), params: params }.to change { patient.consultations.count }.by(1)
 
-      expect(response).to redirect_to(patient_path(patient))
       created = patient.consultations.order(:id).last
+      expect(response).to redirect_to(edit_patient_consultation_path(patient, created))
       expect(created.date).to eq(Date.current)
       expect(created.notes_before.body.to_html).to include("<strong>lumbar</strong>")
       expect(created.notes_to_send.to_plain_text).to eq("Ejercicios")
@@ -101,10 +101,10 @@ RSpec.describe "Consultations", type: :request do
   end
 
   describe "PATCH /patients/:patient_id/consultations/:id" do
-    it "updates the notes" do
+    it "updates the notes and stays on the consultation" do
       patch patient_consultation_path(patient, consultation), params: { consultation: { notes_after: "Nueva nota" } }
 
-      expect(response).to redirect_to(patient_path(patient))
+      expect(response).to redirect_to(edit_patient_consultation_path(patient, consultation))
       expect(consultation.reload.notes_after.to_plain_text).to eq("Nueva nota")
     end
   end

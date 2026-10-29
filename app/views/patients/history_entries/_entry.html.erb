@@ -1,0 +1,19 @@
+<%= turbo_frame_tag consultation do %>
+  <article class="card mt-3">
+    <div class="card-header d-flex justify-content-between">
+      <h5 class="mt-1"><%= l consultation.date, format: '%d-%m-%Y' if consultation.date %></h5>
+      <div>
+        <%= link_to 'Edit', edit_patient_history_entry_path(patient, consultation), class: 'btn btn-success btn-sm px-3 rounded-pill' %>
+        <%= link_to 'PDF', download_consultation_path(consultation), class: 'btn btn-secondary btn-sm px-3 rounded-pill', data: { turbo_frame: '_top' } %>
+      </div>
+    </div>
+    <div class="card-body">
+      <% Consultation::NOTES.each do |notes| %>
+        <section class="mb-3">
+          <h6 class="fw-semibold"><%= Consultation.human_attribute_name(notes) %></h6>
+          <%= consultation.public_send(notes) %>
+        </section>
+      <% end %>
+    </div>
+  </article>
+<% end %>

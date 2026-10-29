@@ -22,6 +22,7 @@
       <div class="card-header d-flex justify-content-between">
         <h5 class="mt-1">Patient consultations</h5>
         <div class="me-3">
+          <%= link_to "History", patient_history_path(@patient), class: 'btn btn-secondary px-4 rounded-pill' %>
           <%= link_to "New", new_patient_consultation_path(@patient), class: 'btn btn-success px-4 rounded-pill'%>
         </div>
       </div>

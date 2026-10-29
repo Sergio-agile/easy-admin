@@ -13,9 +13,7 @@
       <h2>for <%= @patient.first_name %> <%= @patient.last_name %></h2>
     </div>
     <%= simple_form_for [@patient, @consultation] do |f| %>
-      <%= f.input :notes_before, as: :rich_text_area, input_html: { style: 'overflow: auto' }  %>
-      <%= f.input :notes_after, as: :rich_text_area, input_html: { style: 'overflow: auto' } %>
-      <%= f.input :notes_to_send, as: :rich_text_area, input_html: { style: 'overflow: auto' } %>
+      <%= render 'consultations/notes_fields', f: f %>
       <%= f.submit "Save", class: "btn btn-success px-4 rounded-pill" %>
       <%= link_to 'Cancel', patient_path(@patient), class: 'btn btn-secondary px-4 rounded-pill' %>
     <% end %>

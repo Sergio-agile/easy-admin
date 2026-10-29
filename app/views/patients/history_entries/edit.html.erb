@@ -1,0 +1,12 @@
+<%= turbo_frame_tag @consultation do %>
+  <article class="card mt-3">
+    <div class="card-header"><h5 class="mt-1"><%= l @consultation.date, format: '%d-%m-%Y' if @consultation.date %></h5></div>
+    <div class="card-body">
+      <%= simple_form_for @consultation, url: patient_history_entry_path(@patient, @consultation), namespace: dom_id(@consultation) do |f| %>
+        <%= render 'consultations/notes_fields', f: f %>
+        <%= f.submit "Save", class: "btn btn-success px-4 rounded-pill" %>
+        <%= link_to 'Cancel', patient_history_entry_path(@patient, @consultation), class: 'btn btn-secondary px-4 rounded-pill' %>
+      <% end %>
+    </div>
+  </article>
+<% end %>
