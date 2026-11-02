@@ -12,6 +12,6 @@
   ],
   "dependencies": {
     "@rails/actiontext": "^7.2.100",
-    "trix": "^2.1.5"
+    "trix": "^2.1.18"
   }
 }
