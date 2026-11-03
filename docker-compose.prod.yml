@@ -1,7 +1,9 @@
 # Server deployment:
 #   docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
-# Caddy terminates HTTPS for APP_DOMAIN and proxies to web; the app itself is
-# only reachable from the server (127.0.0.1).
+# HTTPS is served by the server's shared Caddy (Sergio-agile/infra, proxy/),
+# which reaches web as "easy-admin" on the external "proxy" network; start that
+# stack first. The site block lives in deploy/caddy/. The app port is bound to
+# 127.0.0.1 only, for checks from the server itself.
 services:
   db:
     image: postgres:16
@@ -37,30 +39,21 @@ services:
       - storage:/rails/storage
     ports:
       - "${APP_BIND:-127.0.0.1}:${APP_PORT:-3000}:3000"
+    networks:
+      default:
+      proxy:
+        aliases:
+          - easy-admin
     depends_on:
       db:
         condition: service_healthy
       redis:
         condition: service_started
 
-  caddy:
-    image: caddy:2-alpine
-    restart: unless-stopped
-    environment:
-      APP_DOMAIN: ${APP_DOMAIN:?missing}
-    ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
-    depends_on:
-      - web
-
 volumes:
   pgdata:
   storage:
-  caddy_data:
-  caddy_config:
+
+networks:
+  proxy:
+    external: true

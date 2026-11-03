@@ -28,7 +28,7 @@ All of them run in GitHub Actions on every pull request.
 
 ## Production
 
-`docker-compose.prod.yml` runs the app, PostgreSQL, Redis and [Caddy](https://caddyserver.com), which serves the app over HTTPS with an automatic Let's Encrypt certificate. The server needs a `.env.production` with `RAILS_MASTER_KEY`, `EASY_ADMIN_DATABASE_PASSWORD` and `APP_DOMAIN` (a hostname whose DNS A record points at the server; ports 80 and 443 must be open).
+`docker-compose.prod.yml` runs the app, PostgreSQL and Redis. HTTPS comes from the server's shared [Caddy](https://caddyserver.com) reverse proxy ([Sergio-agile/infra](https://github.com/Sergio-agile/infra), `proxy/`), which gets the Let's Encrypt certificate for `EASY_ADMIN_DOMAIN` (set in the proxy's `.env`; its DNS A record must point at the server) and imports this app's site block from `deploy/caddy/`. Start the proxy first: the app joins its external `proxy` network. The server needs a `.env.production` with `RAILS_MASTER_KEY` and `EASY_ADMIN_DATABASE_PASSWORD`.
 
 ```sh
 docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build

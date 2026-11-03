@@ -1,0 +1,8 @@
+# Site block for the server's shared Caddy (Sergio-agile/infra, proxy/), which
+# imports it from this directory. Caddy gets and renews the Let's Encrypt
+# certificate for EASY_ADMIN_DOMAIN and redirects HTTP to HTTPS on its own.
+# "easy-admin" is the web service's alias on the shared "proxy" network.
+{$EASY_ADMIN_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy easy-admin:3000
+}
