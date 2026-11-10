@@ -33,7 +33,6 @@ services:
     volumes:
       - .:/rails
       - bundle:/usr/local/bundle
-      - node_modules:/rails/node_modules
     ports:
       - "${APP_PORT:-3000}:3000"
     depends_on:
@@ -47,4 +46,3 @@ services:
 volumes:
   pg16data:
   bundle:
-  node_modules:

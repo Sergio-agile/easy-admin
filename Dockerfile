@@ -17,28 +17,16 @@ ENV RAILS_ENV="production" \
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
-# Install packages needed to build gems and node modules
+# Install packages needed to build gems, plus Node.js as the ExecJS runtime
+# that autoprefixer-rails (via bootstrap) uses when compiling the CSS
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential curl git libpq-dev libvips libyaml-dev node-gyp pkg-config python-is-python3
-
-# Install JavaScript dependencies
-ARG NODE_VERSION=16.15.1
-ARG YARN_VERSION=1.22.19
-ENV PATH=/usr/local/node/bin:$PATH
-RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
-    /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
-    npm install -g yarn@$YARN_VERSION && \
-    rm -rf /tmp/node-build-master
+    apt-get install --no-install-recommends -y build-essential git libpq-dev libvips libyaml-dev nodejs pkg-config
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
-
-# Install node modules
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
 
 # Copy application code
 COPY . .
@@ -47,26 +35,22 @@ COPY . .
 RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-# CSS is compiled by sassc-rails, so skip the cssbundling yarn build
-RUN SECRET_KEY_BASE_DUMMY=1 SKIP_CSS_BUILD=1 ./bin/rails assets:precompile
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 
 # Final stage for app image
 FROM base
 
-# Install packages needed for deployment
+# Install packages needed for deployment (nodejs: ExecJS, required by
+# autoprefixer-rails via bootstrap, needs a JS runtime at boot)
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libvips postgresql-client \
-    chromium fonts-dejavu-core && \
+    chromium fonts-dejavu-core nodejs && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
-
-# ExecJS (required by autoprefixer-rails via bootstrap) needs a JS runtime at boot
-COPY --from=build /usr/local/node /usr/local/node
-ENV PATH=/usr/local/node/bin:$PATH
 
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --create-home --shell /bin/bash && \
