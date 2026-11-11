@@ -65,7 +65,7 @@ jobs:
       - name: Install system packages
         run: |
           apt-get update -qq
-          apt-get install --no-install-recommends -y build-essential git libpq-dev libyaml-dev pkg-config nodejs chromium fonts-dejavu-core
+          apt-get install --no-install-recommends -y build-essential git libpq-dev libyaml-dev pkg-config nodejs chromium fonts-dejavu-core age
 
       - uses: actions/checkout@v5
 
