@@ -11,5 +11,7 @@ class Patients::HistoriesController < ApplicationController
     @patient = Patient.find(params[:patient_id])
     @today = @patient.today_consultation
     @consultations = @patient.consultations.history.where.not(id: @today.id).page(params[:page]).per(PER_PAGE).without_count
+    # Older pages load into lazy frames as the user scrolls; one entry per visit is enough.
+    log_access(:history_viewed, patient: @patient) if params[:page].blank?
   end
 end
