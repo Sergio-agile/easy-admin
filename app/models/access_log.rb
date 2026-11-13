@@ -28,6 +28,7 @@ class AccessLog < ApplicationRecord
     login login_failed logout
     patient_viewed patient_created patient_updated history_viewed
     consultation_viewed consultation_created consultation_updated report_downloaded
+    access_log_viewed
   ].freeze
 
   belongs_to :user, optional: true
@@ -37,6 +38,19 @@ class AccessLog < ApplicationRecord
   validates :action, inclusion: { in: ACTIONS }
 
   scope :recent, -> { order(created_at: :desc, id: :desc) }
+
+  # Filters for the admin page. Blank values are ignored; dates are inclusive.
+  def self.filter(user_id: nil, patient: nil, action: nil, from: nil, to: nil)
+    logs = all
+    logs = logs.where(user_id:) if user_id.present?
+    logs = logs.where(patient_id: Patient.search(patient).reorder(nil).select(:id)) if patient.present?
+    logs = logs.where(action:) if action.present?
+    logs = logs.where(created_at: Date.parse(from).beginning_of_day..) if from.present?
+    logs = logs.where(created_at: ..Date.parse(to).end_of_day) if to.present?
+    logs
+  rescue Date::Error
+    none
+  end
 
   def self.record(action, user:, ip_address:, patient: nil, consultation: nil)
     create!(action: action.to_s, user:, ip_address:, consultation:, patient: patient || consultation&.patient)

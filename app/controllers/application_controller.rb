@@ -18,6 +18,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: "You must be logged in" unless current_user_signed_in?
   end
 
+  def require_admin!
+    redirect_to home_path, alert: "You are not allowed to see that page" unless current_user&.admin?
+  end
+
   def current_user
     Current.user ||= autheticate_user_from_session
   end

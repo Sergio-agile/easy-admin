@@ -33,8 +33,9 @@
             <%= sidemenu_link('Home', home_path, :home) %>
             <%= sidemenu_link('Patients', patients_path, :patients) %>
             <%= sidemenu_link('Consultations', consultations_path, :consultations) %>
-            <% if current_user_signed_in? %>
-              <%= sidemenu_link('Config', edit_password_path, :config) %>
+            <%= sidemenu_link('Config', edit_password_path, :config) %>
+            <% if current_user.admin? %>
+              <%= sidemenu_link('Admin', admin_access_logs_path, :admin) %>
             <% end %>
           </ul>
         </div>

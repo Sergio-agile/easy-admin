@@ -1,5 +1,5 @@
 namespace :users do
-  desc "Create a user with a random password: bin/rails users:create EMAIL=x [FIRST_NAME=y LAST_NAME=z]"
+  desc "Create a user with a random password: bin/rails users:create EMAIL=x [FIRST_NAME=y LAST_NAME=z ADMIN=1]"
   task create: :environment do
     email = ENV.fetch("EMAIL") { abort "EMAIL is required" }
     abort "User #{email} already exists" if User.exists?(email: email)
@@ -9,6 +9,7 @@ namespace :users do
       email: email,
       first_name: ENV["FIRST_NAME"],
       last_name: ENV["LAST_NAME"],
+      admin: ENV["ADMIN"] == "1",
       password: password,
       password_confirmation: password
     )
