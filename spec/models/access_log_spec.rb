@@ -46,4 +46,16 @@ RSpec.describe AccessLog, type: :model do
     expect { log.update!(action: "logout") }.to raise_error(ActiveRecord::ReadOnlyRecord)
     expect { log.destroy! }.to raise_error(ActiveRecord::ReadOnlyRecord)
   end
+
+  describe ".purge_expired" do
+    it "deletes rows older than three years and keeps the rest" do
+      now = Time.zone.local(2029, 6, 1, 12)
+      old = AccessLog.create!(action: "login", created_at: now - 3.years - 1.second)
+      kept = AccessLog.create!(action: "login", created_at: now - 3.years + 1.second)
+
+      expect(AccessLog.purge_expired(now)).to eq(1)
+      expect(AccessLog.pluck(:id)).to eq([ kept.id ])
+      expect(AccessLog.exists?(old.id)).to be(false)
+    end
+  end
 end

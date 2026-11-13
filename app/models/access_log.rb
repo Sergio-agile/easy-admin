@@ -1,6 +1,9 @@
 # Who saw or changed which patient, and when. Required to account for access to
 # health data (RGPD art. 5.2 and 32). Rows are append-only: they can be created
-# but not edited or destroyed through the model. Stores no health data itself.
+# but not edited or destroyed through the model. The only deletion is
+# purge_expired, which drops rows older than RETENTION (LOPDGDD art. 72: the
+# longest limitation period for data-protection infringements is three years).
+# Stores no health data itself.
 # == Schema Information
 #
 # Table name: access_logs
@@ -31,6 +34,8 @@ class AccessLog < ApplicationRecord
     access_log_viewed
   ].freeze
 
+  RETENTION = 3.years
+
   belongs_to :user, optional: true
   belongs_to :patient, optional: true
   belongs_to :consultation, optional: true
@@ -38,6 +43,7 @@ class AccessLog < ApplicationRecord
   validates :action, inclusion: { in: ACTIONS }
 
   scope :recent, -> { order(created_at: :desc, id: :desc) }
+  scope :expired, ->(now = Time.current) { where(created_at: ...now - RETENTION) }
 
   # Filters for the admin page. Blank values are ignored; dates are inclusive.
   def self.filter(user_id: nil, patient: nil, action: nil, from: nil, to: nil)
@@ -54,6 +60,11 @@ class AccessLog < ApplicationRecord
 
   def self.record(action, user:, ip_address:, patient: nil, consultation: nil)
     create!(action: action.to_s, user:, ip_address:, consultation:, patient: patient || consultation&.patient)
+  end
+
+  # Returns the number of rows deleted. delete_all skips readonly? on purpose.
+  def self.purge_expired(now = Time.current)
+    expired(now).delete_all
   end
 
   def readonly?

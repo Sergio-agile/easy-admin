@@ -1,0 +1,9 @@
+[Unit]
+Description=Delete easy-admin access-log rows older than three years
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/easy-admin
+ExecStart=/usr/bin/docker compose -f docker-compose.prod.yml --env-file .env.production exec -T web bin/rails access_logs:purge

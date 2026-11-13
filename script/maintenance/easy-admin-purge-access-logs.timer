@@ -1,0 +1,9 @@
+[Unit]
+Description=Weekly purge of old easy-admin access-log rows
+
+[Timer]
+OnCalendar=Sun *-*-* 04:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
