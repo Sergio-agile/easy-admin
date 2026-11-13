@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include AccessLogging
+
   SESSION_IDLE_TIMEOUT = 2.hours
 
   before_action :expire_idle_session

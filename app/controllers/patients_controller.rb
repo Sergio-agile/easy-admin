@@ -8,6 +8,7 @@ class PatientsController < ApplicationController
 
   def show
     @patient = Patient.includes(:consultations).find(params[:id])
+    log_access(:patient_viewed, patient: @patient)
   end
 
   def new
@@ -18,6 +19,7 @@ class PatientsController < ApplicationController
     @patient = Patient.new(patient_params)
 
     if @patient.save
+      log_access(:patient_created, patient: @patient)
       redirect_to patient_path(@patient)
     else
       render :new, status: :unprocessable_content
@@ -35,6 +37,7 @@ class PatientsController < ApplicationController
     @patient.assign_attributes(patient_params)
 
     @result = @patient.save
+    log_access(:patient_updated, patient: @patient) if @result
 
     respond_to(&:turbo_stream)
   end

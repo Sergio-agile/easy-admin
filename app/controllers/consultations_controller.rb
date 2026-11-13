@@ -16,6 +16,7 @@ class ConsultationsController < ApplicationController
     @patient = Patient.find(params[:patient_id])
     @consultation.patient = @patient
     if @consultation.save
+      log_access(:consultation_created, consultation: @consultation)
       redirect_to edit_patient_consultation_path(@patient, @consultation), notice: "Consultation saved"
     else
       render :new, status: :unprocessable_content
@@ -29,6 +30,7 @@ class ConsultationsController < ApplicationController
       :rich_text_notes_after,
       :rich_text_notes_to_send
     ).find(params[:id])
+    log_access(:consultation_viewed, consultation: @consultation)
   end
 
   def update
@@ -36,6 +38,7 @@ class ConsultationsController < ApplicationController
     @consultation.assign_attributes(consultation_params)
 
     if @consultation.save
+      log_access(:consultation_updated, consultation: @consultation)
       redirect_to edit_patient_consultation_path(@consultation.patient, @consultation), notice: "Consultation saved"
     else
       render :new, status: :unprocessable_content
@@ -43,7 +46,9 @@ class ConsultationsController < ApplicationController
   end
 
   def download
-    @report = ConsultationReport.new(Consultation.includes(:patient, :rich_text_notes_to_send).find(params[:id]))
+    consultation = Consultation.includes(:patient, :rich_text_notes_to_send).find(params[:id])
+    @report = ConsultationReport.new(consultation)
+    log_access(:report_downloaded, consultation:)
 
     respond_to do |format|
       format.html { render layout: "report" }

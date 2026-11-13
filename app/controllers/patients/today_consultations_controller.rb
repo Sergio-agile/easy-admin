@@ -8,7 +8,9 @@ class Patients::TodayConsultationsController < ApplicationController
   end
 
   def update
+    action = @consultation.new_record? ? :consultation_created : :consultation_updated
     @consultation.update!(consultation_params)
+    log_access(action, consultation: @consultation)
     redirect_to patient_today_consultation_path(@patient), notice: "Saved", status: :see_other
   end
 

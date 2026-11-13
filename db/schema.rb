@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_29_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_11_150000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "access_logs", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "patient_id"
+    t.bigint "consultation_id"
+    t.string "action", null: false
+    t.string "ip_address"
+    t.datetime "created_at", null: false
+    t.index ["created_at"], name: "index_access_logs_on_created_at"
+    t.index ["patient_id", "created_at"], name: "index_access_logs_on_patient_id_and_created_at"
+    t.index ["user_id", "created_at"], name: "index_access_logs_on_user_id_and_created_at"
+  end
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -88,6 +100,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_29_100000) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "access_logs", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "consultations", "patients"

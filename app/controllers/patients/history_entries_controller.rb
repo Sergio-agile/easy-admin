@@ -13,6 +13,7 @@ class Patients::HistoryEntriesController < ApplicationController
 
   def update
     @consultation.update!(consultation_params)
+    log_access(:consultation_updated, consultation: @consultation)
     redirect_to patient_history_entry_path(@patient, @consultation), status: :see_other
   end
 
