@@ -30,4 +30,8 @@ Rails.application.routes.draw do
   resources :consultations do
     get :download, on: :member
   end
+
+  namespace :admin do
+    resources :access_logs, only: :index
+  end
 end

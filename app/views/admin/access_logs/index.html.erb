@@ -1,0 +1,76 @@
+<%= content_for :breadcrumbs do %>
+  <%= breadcrumb_list do %>
+    <%= breadcrumb_item 'Admin' %>
+    <%= breadcrumb_item 'Access log' %>
+  <% end %>
+<% end %>
+
+<%= content_for :contents do %>
+  <div class="container pt-5">
+    <h1 class="page-header">Access log</h1>
+    <p class="text-muted">Who saw or changed each patient's data. Entries cannot be edited or deleted.</p>
+
+    <%= form_with url: admin_access_logs_path, method: :get, class: "row g-2 align-items-end mt-3" do |f| %>
+      <div class="col-md-2">
+        <%= f.label :user_id, "User", class: "form-label" %>
+        <%= f.select :user_id, @users.map { |u| [ [ u.first_name, u.last_name ].compact_blank.join(" ").presence || u.email, u.id ] },
+              { include_blank: "All", selected: @filters[:user_id] }, class: "form-select" %>
+      </div>
+      <div class="col-md-3">
+        <%= f.label :patient, "Patient", class: "form-label" %>
+        <%= f.search_field :patient, value: @filters[:patient], placeholder: "Name", class: "form-control" %>
+      </div>
+      <div class="col-md-2">
+        <%= f.label :event, "Action", class: "form-label" %>
+        <%= f.select :event, AccessLog::ACTIONS.map { |a| [ a.humanize, a ] },
+              { include_blank: "All", selected: @filters[:event] }, class: "form-select" %>
+      </div>
+      <div class="col-md-2">
+        <%= f.label :from, "From", class: "form-label" %>
+        <%= f.date_field :from, value: @filters[:from], class: "form-control" %>
+      </div>
+      <div class="col-md-2">
+        <%= f.label :to, "To", class: "form-label" %>
+        <%= f.date_field :to, value: @filters[:to], class: "form-control" %>
+      </div>
+      <div class="col-md-1">
+        <%= f.submit "Filter", name: nil, class: "btn btn-success w-100" %>
+      </div>
+    <% end %>
+
+    <table id="access-logs-table" class="table mt-3 table-light table-striped table-hover">
+      <thead>
+        <tr>
+          <th>When</th>
+          <th>User</th>
+          <th>Action</th>
+          <th>Patient</th>
+          <th>Consultation</th>
+          <th>IP</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @access_logs.each do |log| %>
+          <tr>
+            <td><%= l log.created_at, format: :short %></td>
+            <td><%= log.user&.email || "—" %></td>
+            <td><%= log.action.humanize %></td>
+            <td>
+              <% if log.patient %>
+                <%= link_to "#{log.patient.first_name} #{log.patient.last_name}", patient_path(log.patient) %>
+              <% elsif log.patient_id %>
+                Deleted patient #<%= log.patient_id %>
+              <% end %>
+            </td>
+            <td><%= log.consultation&.date || (log.consultation_id && "Deleted ##{log.consultation_id}") %></td>
+            <td><%= log.ip_address %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% if @access_logs.empty? %>
+      <p class="text-muted">No entries match these filters.</p>
+    <% end %>
+    <%= paginate @access_logs %>
+  </div>
+<% end %>
